@@ -8,10 +8,10 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]:-.}")" 2>/dev/null && pwd)"
 if [ -f "$HERE/skills.txt" ]; then LIST=$(cat "$HERE/skills.txt"); else LIST=$(curl -fsSL "$LIST_URL"); fi
 
 put() { # $1=kaynak klasör/dosya  $2=skill adı
-  rm -rf "$S/$2"
-  if [ -f "$1" ]; then mkdir -p "$S/$2" && cp "$1" "$S/$2/SKILL.md"
-  elif [ -f "$1/SKILL.md" ]; then cp -r "$1" "$S/$2" && rm -rf "$S/$2/.git"
-  fi && echo "  + $2"
+  # kaynak yoksa eldeki kurulu kopyaya dokunma
+  if [ -f "$1" ]; then rm -rf "$S/$2"; mkdir -p "$S/$2" && cp "$1" "$S/$2/SKILL.md"
+  elif [ -f "$1/SKILL.md" ]; then rm -rf "$S/$2"; cp -r "$1" "$S/$2" && rm -rf "$S/$2/.git"
+  else echo "  ! $2 bulunamadi"; return; fi && echo "  + $2"
 }
 
 echo "$LIST" | grep -v '^\s*#' | grep -v '^\s*$' | while read -r repo path name; do
@@ -20,7 +20,8 @@ echo "$LIST" | grep -v '^\s*#' | grep -v '^\s*$' | while read -r repo path name;
     git clone -q --depth 1 --filter=blob:none --sparse "https://github.com/$repo" "$dir" || { echo "! $repo indirilemedi"; continue; }
   fi
   if [ "$base" = "." ]; then git -C "$dir" sparse-checkout disable >/dev/null 2>&1
-  else git -C "$dir" sparse-checkout add --no-cone "/$base" >/dev/null 2>&1 || git -C "$dir" sparse-checkout set --no-cone "/$base" >/dev/null 2>&1; fi
+  # Git Bash "/yol" desenini Windows yoluna cevirmesin diye
+  else (cd "$dir" && MSYS_NO_PATHCONV=1 git sparse-checkout set --no-cone "/$base") >/dev/null 2>&1; fi
   echo "$repo"
   if [ "$path" != "$base" ]; then
     for d in "$dir/$base"/*/; do [ -f "$d/SKILL.md" ] && put "${d%/}" "$(basename "$d")"; done
