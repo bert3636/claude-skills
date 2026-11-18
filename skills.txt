@@ -1,0 +1,16 @@
+# Her satır: <github-repo> <repo içindeki yol> [skill adı]
+# Yol bir klasörse ve içinde SKILL.md varsa o skill kurulur.
+# Yol "*" ile biterse altındaki her klasör ayrı skill olarak kurulur.
+# Yeni skill eklemek için buraya bir satır ekleyip push'la.
+emilkowalski/skills                 skills/*
+nextlevelbuilder/ui-ux-pro-max-skill .claude/skills/*
+vercel-labs/skills                  skills/find-skills
+pbakaus/impeccable                  .claude/skills/*
+leonxlnx/taste-skill                skills/taste-skill
+multica-ai/andrej-karpathy-skills   skills/*
+kaankiziltug/logo-design-skill      skills/*
+ComposioHQ/awesome-claude-skills    content-research-writer
+AgriciDaniel/claude-shorts          .                     shorts
+Panniantong/Agent-Reach             agent_reach/skill     agent-reach
+DietrichGebert/ponytail             skills/*
+Graphify-Labs/graphify              graphify/skill.md     graphify
