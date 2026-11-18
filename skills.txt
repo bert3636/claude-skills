@@ -14,3 +14,4 @@ AgriciDaniel/claude-shorts          .                     shorts
 Panniantong/Agent-Reach             agent_reach/skill     agent-reach
 DietrichGebert/ponytail             skills/*
 Graphify-Labs/graphify              graphify/skill.md     graphify
+lemomo-ai/lemo-opuscar              plugin/skills/lemo-opuscar
