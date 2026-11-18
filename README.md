@@ -26,3 +26,4 @@ curl -sL https://raw.githubusercontent.com/bert3636/claude-skills/main/install.s
 - Superpowers bir claude.ai eklentisi, hesaptan geliyor; listede yok.
 - Ponytail'in sadece skill'leri kurulur, hook'ları kurulmaz.
 - graphify, agent-reach ve shorts ayrıca Python araçları ister (`pip install graphifyy` vb.).
+- earshot ayrıca kendi aracını ister: `uv tool install "earshot[mcp] @ git+https://github.com/Leonxlnx/earshot"`.
