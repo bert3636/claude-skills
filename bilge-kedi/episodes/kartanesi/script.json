@@ -1,0 +1,9 @@
+{"bpm":100,"transpose":-5,
+"lines":["Hiç iki tane aynı kar tanesi gördün mü?",
+"Kar taneleri, bulutların içinde minicik buz kristalleri olarak doğar.",
+"Düşerken büyür ve altı kollu bir yıldıza dönüşür!",
+"Her biri farklı bir yoldan düşer. O yüzden hiçbiri birbirinin aynısı değildir!",
+"Tıpkı senin gibi! Sen de eşsizsin ve çok özelsin.",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["sparkle",0,"kar"],["sparkle",1,"kristalleri"],["ding",1,"doğar"],["swirl",2,"büyür"],["pop",2,"altı"],["sparkle",2,"yıldıza"],
+["whoosh",3,"farklı"],["boing",3,"hiçbiri"],["heart",4,"tıpkı"],["sparkle",4,"eşsizsin"],["ding",4,"özelsin"]]}

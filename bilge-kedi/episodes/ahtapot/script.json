@@ -1,0 +1,10 @@
+{"bpm":116,"transpose":2,
+"lines":["Üç kalbi olan bir hayvan biliyor musun?",
+"Okyanusun derinliklerinde, sekiz kollu bir dostumuz yaşar: Ahtapot!",
+"Tam üç kalbi var! Biri, ikisi, üçü!",
+"Kanı da mavi renkte, tıpkı deniz gibi!",
+"Saklanmak istediğinde rengini değiştirir. Hop, kayaya benzedi!",
+"Bir de çok akıllıdır, kavanoz kapağını bile açabilir!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["bubble",0,"kalbi"],["bubble",1,null],["pop",1,"ahtapot"],["heart",2,"biri"],["heart",2,"ikisi"],["heart",2,"üçü"],
+["drop",3,"mavi"],["sparkle",3,"deniz"],["swirl",4,"rengini"],["pop",4,"hop"],["tick",5,"kavanoz"],["pop",5,"açabilir"],["sparkle",5,"açabilir",0.1]]}

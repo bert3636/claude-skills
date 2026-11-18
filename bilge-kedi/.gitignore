@@ -1,0 +1,10 @@
+node_modules/
+package-lock.json
+episodes/*/frames/
+episodes/*/samples/
+episodes/*/*.mp4
+episodes/*/*.wav
+episodes/*/sheet.png
+episodes/*/render.log
+episodes/*/timeline.js
+episodes/*/timeline.json

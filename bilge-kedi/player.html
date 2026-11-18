@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="node_modules/@fontsource/baloo-2/800.css">
+<style>
+ html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#07071c}
+ svg{position:absolute;inset:0}
+ #cap{position:absolute;left:70px;right:110px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 44px;
+   font-family:'Baloo 2';font-weight:800;font-size:106px;line-height:1.05;color:#fff;text-align:center}
+ #cap span{display:inline-block;-webkit-text-stroke:16px #1a1040;paint-order:stroke fill;transform-origin:50% 70%}
+ #stk{position:absolute;inset:0;font-family:'Baloo 2';font-weight:800;color:#fff;-webkit-text-stroke:18px #1a1040;paint-order:stroke fill;text-align:center}
+</style>
+<script src="cat.js"></script><script src="engine.js"></script>
+<script>const EPN=new URLSearchParams(location.search).get('ep');
+document.write(`<script src="episodes/${EPN}/timeline.js"><\/script><script src="episodes/${EPN}/ep.js"><\/script>`);</script>
+</head><body><svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg><div id="cap"></div><div id="stk"></div>
+<script>renderAt(0)</script></body></html>

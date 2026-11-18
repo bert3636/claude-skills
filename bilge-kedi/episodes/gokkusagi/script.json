@@ -1,0 +1,11 @@
+{"bpm":120,"transpose":5,
+"lines":["Gökyüzündeki renkli köprüyü kim boyuyor dersin?",
+"Yağmurdan sonra güneş açınca, gökkuşağı belirir!",
+"Çünkü güneşin ışığında, aslında bütün renkler saklıdır.",
+"Yağmur damlaları bu renkleri birbirinden ayırır.",
+"Kırmızı, turuncu, sarı, yeşil, mavi, lacivert ve mor!",
+"Uçaktan bakarsan, gökkuşağını kocaman bir daire olarak görebilirsin!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["sparkle",0,"renkli"],["drop",1,"yağmurdan"],["drop",1,"sonra"],["sparkle",1,"gökkuşağı"],["sparkle",2,"renkler"],
+["drop",3,"damlaları"],["swirl",3,"ayırır"],["pop",4,"kırmızı"],["pop",4,"turuncu"],["pop",4,"sarı"],["pop",4,"yeşil"],["pop",4,"mavi"],["pop",4,"lacivert"],["pop",4,"mor"],
+["whoosh",5,"uçaktan"],["ding",5,"daire"]]}

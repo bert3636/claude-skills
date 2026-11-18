@@ -1,0 +1,7 @@
+# Yapılmış konular (her yeni bölümden sonra bir satır ekle: klasör-adı | konu)
+karadelik | Kara delikler
+ahtapot | Ahtapot: üç kalp, mavi kan, renk değiştirme
+ay | Ay: yansıyan ışık, düşük çekim, ayak izleri
+gokkusagi | Gökkuşağı: yedi renk, uçaktan daire
+arilar | Arılar: milyonlarca çiçek, dans, bozulmayan bal
+kartanesi | Kar tanesi: altı kol, her biri eşsiz

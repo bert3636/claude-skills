@@ -1,0 +1,6 @@
+{
+  "name": "bilge-kedi",
+  "private": true,
+  "description": "Bilge Kedi YouTube Shorts üretim hattı",
+  "dependencies": { "@fontsource/baloo-2": "^5.3.0" }
+}

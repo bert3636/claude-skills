@@ -1,0 +1,9 @@
+{"bpm":104,"transpose":-3,
+"lines":["Ay'da zıplasan ne olur, biliyor musun?",
+"Ay, Dünya'nın en yakın komşusudur. Geceleri bize ışık tutar.",
+"Ama aslında kendi ışığı yoktur. Güneş'in ışığını yansıtır!",
+"Ay'da her şey çok hafiftir. Zıplarsan, uçar gibi yükselirsin!",
+"Ay'da rüzgâr da yoktur. Astronotların ayak izleri hâlâ orada duruyor!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["jump",0,"zıplasan"],["sparkle",1,"komşusudur"],["sparkle",1,"ışık"],["swirl",2,"güneş"],["ding",2,"yansıtır"],
+["jump",3,"zıplarsan"],["boing",3,"yükselirsin"],["drop",4,"ayak"],["drop",4,"izleri"],["drop",4,"hâlâ"],["sparkle",4,"duruyor"]]}

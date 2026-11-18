@@ -1,0 +1,9 @@
+{"bpm":118,"transpose":0,
+"lines":["Bir kavanoz bal için kaç çiçek gerekir, biliyor musun?",
+"Arılar çiçekten çiçeğe uçar ve tatlı nektarı toplar.",
+"Tek bir kavanoz bal için, milyonlarca çiçeği ziyaret ederler!",
+"Arılar dans ederek konuşur! Bu dans, en güzel çiçeklerin yerini anlatır.",
+"Bal o kadar dayanıklıdır ki, yıllarca bozulmaz!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["buzz",0,"bal"],["buzz",1,"uçar"],["sparkle",1,"nektarı"],["tick",2,"milyonlarca"],["ding",2,"ziyaret"],
+["buzz",3,"dans"],["boing",3,"konuşur"],["sparkle",3,"çiçeklerin"],["swirl",4,"yıllarca"],["ding",4,"bozulmaz"]]}
