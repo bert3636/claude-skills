@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="node_modules/@fontsource/baloo-2/800.css">
+<style>html,body{margin:0;width:1920px;height:1080px;overflow:hidden}svg{position:absolute;inset:0}</style>
+<script>window.LAND=true</script><script src="cat.js"></script><script src="engine.js"></script></head><body><svg id="s" width="1920" height="1080"></svg>
+<script>
+const kind=new URLSearchParams(location.search).get('k');
+const T=(x,y,sz,t,f='#fff',rot=0,sw=0.16)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="${sz}" fill="${f}" stroke="#1a1040" stroke-width="${sz*sw}" paint-order="stroke" stroke-linejoin="round" transform="rotate(${rot} ${x} ${y})">${t}</text>`;
+const R=K.rng(5);let stars='';for(let i=0;i<120;i++)stars+=`<circle cx="${R()*1920}" cy="${R()*1080}" r="${R()*3+1}" fill="#fff" opacity="${0.3+R()*0.7}"/>`;
+const bg=(a,b,c)=>`<defs><radialGradient id="g" cx="60%" cy="45%" r="80%"><stop offset="0" stop-color="${a}"/><stop offset=".55" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></radialGradient>
+ <filter id="bl" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="40"/></filter></defs><rect width="1920" height="1080" fill="url(#g)"/>${stars}`;
+const cat=(x,y,s,st,over='')=>`<circle cx="${x}" cy="${y}" r="${430*s}" fill="#fff" opacity="0.18" filter="url(#bl)"/><g transform="translate(${x-350*s} ${y-480*s}) scale(${s})">${drawCat(st)}${over}</g>`;
+const badge=(x,y,r,col,ic)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${col}" stroke="#1a1040" stroke-width="12"/><text x="${x}" y="${y+r*0.36}" text-anchor="middle" font-size="${r*1.05}">${ic}</text>`;
+let s='';
+if(kind==='derleme'){
+ s=bg('#5a3aa8','#2a1b6e','#0c0a2a')+cat(520,640,1.05,{glint:1,brow:1,ear:1,mouth:0.8,lookX:0.6});
+ [['🕳️','#7a5cff'],['🐙','#b26bff'],['🌙','#e8b830'],['🌈','#3fa9ff'],['🐝','#ff9f2f'],['❄️','#3fc8e8']].forEach(([ic,c],i)=>s+=badge(1130+(i%3)*250,560+Math.floor(i/3)*250,105,c,ic));
+ s+=T(1380,300,250,'6 SIR!','#ffd84d',-4)+T(1380,420,90,'Bilge Kedi Anlatıyor','#fff',-2);
+}
+if(kind==='yarisma'){
+ s=bg('#ff7fb0','#7a3aa8','#1a0f3a')+cat(1500,640,1.0,{brow:1,lookX:-0.9,lookY:-0.5,mouth:0.2});
+ s+=T(640,250,170,'KAÇINI','#ffd84d',-4)+T(640,430,170,'BİLECEKSİN?','#fff',-4);
+ [['A','#ff7fb0','🐙'],['B','#7af0ff','🌈'],['C','#ffd84d','🌙']].forEach(([l,c,ic],i)=>{const x=300+i*330,y=720;
+  s+=`<g transform="rotate(${-6+i*6} ${x} ${y})"><rect x="${x-140}" y="${y-120}" width="280" height="240" rx="40" fill="${i==1?'#5fe07a':'#fff'}" stroke="#1a1040" stroke-width="12"/><text x="${x}" y="${y+50}" text-anchor="middle" font-size="140">${ic}</text>
+  <circle cx="${x-130}" cy="${y-110}" r="50" fill="${c}" stroke="#1a1040" stroke-width="10"/>${T(x-130,y-88,64,l)}</g>`});
+ s+=`<circle cx="1180" cy="210" r="110" fill="#1a1040"/><circle cx="1180" cy="210" r="90" fill="none" stroke="#ffd84d" stroke-width="20"/>`+T(1180,250,120,'5');
+ s+=T(1720,140,170,'?','#ffd84d',12)+T(640,990,80,'8 SORU','#fff',-3);
+}
+if(kind==='masal'){
+ s=bg('#3a4fa8','#1a2260','#060a24')+`<path d="M 1060 70 A 140 140 0 1 0 1210 270 A 110 110 0 1 1 1060 70 Z" fill="#ffe9a8"/>`;
+ const cap=`<path d="M 130 175 Q 260 -110 600 -70 Q 700 -40 690 60 Q 600 0 540 60 Q 560 110 570 175 Z" fill="#4a5fd0" stroke="#1a1040" stroke-width="8"/><circle cx="690" cy="70" r="42" fill="#fff" stroke="#1a1040" stroke-width="7"/><rect x="110" y="150" width="480" height="60" rx="30" fill="#fff" stroke="#1a1040" stroke-width="7"/>`;
+ s+=cat(1540,760,0.85,{blink:1,brow:0.3,tail:0.3},cap);
+ let st='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,r=i%2?60:125;st+=`${i?'L':'M'} ${600+Math.cos(a)*r} ${720+Math.sin(a)*r} `}
+ s+=`<circle cx="600" cy="710" r="200" fill="#ffe27a" opacity="0.4" filter="url(#bl)"/><path d="${st}Z" fill="#ffe27a" stroke="#e8a21a" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M 560 715 q 16 14 32 0 M 610 715 q 16 14 32 0" stroke="#7a4a10" stroke-width="8" fill="none" stroke-linecap="round"/>`;
+ s+=T(640,230,170,'Uyku Masalı','#ffe9a8',-3)+T(640,380,92,"Pırıl'ın Uzay Yolculuğu",'#fff',-2)+T(860,600,90,'z','#fff',10)+T(930,520,70,'z','#fff',10);
+}
+document.getElementById('s').innerHTML=s;
+</script></body></html>

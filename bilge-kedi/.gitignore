@@ -9,3 +9,5 @@ episodes/*/render.log
 episodes/*/timeline.js
 episodes/*/timeline.json
 episodes/*/parts/
+episodes/*/kapak*.png
+episodes/*/kapak*.jpg
