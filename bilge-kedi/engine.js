@@ -1,7 +1,7 @@
 // Bilge Kedi ortak motoru: arka plan, kedi, altyazı, çıkartmalar, flaş, logo.
 // Bölüm dosyası window.EP = { theme, stage(t,c), cat(st,c), catOver(c,P), catDy(c), stickers(c), flashes(c), shakes(c), poses }
 (function () {
-  const W = 1080, H = 1920;
+  const LAND = !!window.LAND, W = LAND ? 1920 : 1080, H = LAND ? 1080 : 1920;
   const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
   const seg = (t, a, b) => cl((t - a) / (b - a));
   const eo = x => 1 - Math.pow(1 - x, 3);
@@ -9,7 +9,7 @@
   const lerp = (a, b, x) => a + (b - a) * x;
   function rng(seed) { return () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }; }
   const low = s => s.replace(/I/g, 'ı').replace(/İ/g, 'i').toLocaleLowerCase('tr');
-  window.K = { W, H, cl, seg, eo, back, lerp, rng, low };
+  window.K = { LAND, W, H, cl, seg, eo, back, lerp, rng, low };
 
   const THEMES = {
     space: { g: ['#3a2a7a', '#1a1450', '#07071c'], neb: ['#ff5fa8', '#3fd0ff'], stars: true },
@@ -34,17 +34,17 @@
     const th = THEMES[EP.theme || 'space'];
     let s = `<defs>${DEFS}<radialGradient id="bg" cx="50%" cy="30%" r="85%"><stop offset="0" stop-color="${th.g[0]}"/><stop offset="0.5" stop-color="${th.g[1]}"/><stop offset="1" stop-color="${th.g[2]}"/></radialGradient></defs>
       <rect width="${W}" height="${H}" fill="url(#bg)"/>
-      <circle cx="${200 + Math.sin(t * .3) * 40}" cy="520" r="280" fill="${th.neb[0]}" opacity="0.22" filter="url(#b80)"/>
-      <circle cx="${900 + Math.cos(t * .25) * 40}" cy="1250" r="320" fill="${th.neb[1]}" opacity="0.18" filter="url(#b80)"/>`;
-    if (th.rays) for (let i = 0; i < 5; i++) { const x = 150 + i * 200 + Math.sin(t * 0.5 + i) * 40;
+      <circle cx="${W * 0.18 + Math.sin(t * .3) * 40}" cy="${H * 0.27}" r="280" fill="${th.neb[0]}" opacity="0.22" filter="url(#b80)"/>
+      <circle cx="${W * 0.83 + Math.cos(t * .25) * 40}" cy="${H * 0.65}" r="320" fill="${th.neb[1]}" opacity="0.18" filter="url(#b80)"/>`;
+    if (th.rays) for (let i = 0; i < (LAND ? 9 : 5); i++) { const x = 150 + i * 200 + Math.sin(t * 0.5 + i) * 40;
       s += `<path d="M ${x - 40} 0 L ${x + 40} 0 L ${x + 160} ${H} L ${x - 60} ${H} Z" fill="#bff6ff" opacity="${0.06 + 0.03 * Math.sin(t + i)}"/>`; }
     if (th.stars) for (const p of PTS) { const y = (p.y + t * 40 * p.d) % H;
       s += `<circle cx="${p.x}" cy="${y}" r="${p.r}" fill="#fff" opacity="${(0.35 + 0.65 * Math.abs(Math.sin(t * 1.7 + p.p))) * p.d}"/>`; }
     if (th.bubbles) for (const p of PTS.slice(0, 50)) { const y = H - ((p.y + t * 160 * p.d) % (H + 100)); const x = p.x + Math.sin(t * 2 + p.p) * 14;
       s += `<circle cx="${x}" cy="${y}" r="${p.r * 4}" fill="none" stroke="#dffaff" stroke-width="3" opacity="${0.5 * p.d}"/><circle cx="${x - p.r * 1.3}" cy="${y - p.r * 1.3}" r="${p.r}" fill="#fff" opacity="${0.6 * p.d}"/>`; }
-    if (th.clouds) for (let i = 0; i < 4; i++) { const x = ((i * 330 + t * (25 + i * 8)) % 1500) - 200;
-      s += cloud(x, 180 + i * 230, 0.7 + (i % 2) * 0.4, 0.75); }
-    if (th.hills) s += `<path d="M 0 1420 Q 270 1300 540 1400 T 1080 1380 V 1920 H 0 Z" fill="#7fd36a"/><path d="M 0 1520 Q 300 1440 600 1530 T 1080 1500 V 1920 H 0 Z" fill="#5cbf4f"/>`;
+    if (th.clouds) for (let i = 0; i < 4; i++) { const x = ((i * 330 * W / 1080 + t * (25 + i * 8)) % (W + 420)) - 200;
+      s += cloud(x, LAND ? H * (0.1 + i * 0.12) : 180 + i * 230, 0.7 + (i % 2) * 0.4, 0.75); }
+    if (th.hills) s += `<g transform="scale(${W / 1080} ${LAND ? 0.75 : 1}) translate(0 ${LAND ? -480 : 0})"><path d="M 0 1420 Q 270 1300 540 1400 T 1080 1380 V 1920 H 0 Z" fill="#7fd36a"/><path d="M 0 1520 Q 300 1440 600 1530 T 1080 1500 V 1920 H 0 Z" fill="#5cbf4f"/></g>`;
     if (th.snow) for (const p of PTS.slice(0, 90)) { const y = (p.y + t * 90 * p.d) % H; const x = p.x + Math.sin(t * 1.3 + p.p) * 30;
       s += `<circle cx="${x}" cy="${y}" r="${p.r * 1.8}" fill="#fff" opacity="${0.4 + 0.5 * p.d}"/>`; }
     const dk = EP.dark ? EP.dark(t, c) : 0;
@@ -56,7 +56,7 @@
   K.text = (x, y, size, txt, fill = '#fff', anchor = 'middle', extra = '') =>
     `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="'Baloo 2'" font-weight="800" font-size="${size}" fill="${fill}" stroke="#1a1040" stroke-width="${size * 0.14}" paint-order="stroke" ${extra}>${txt}</text>`;
 
-  const POSE = { big: { x: 540, y: 1060, s: 1.1 }, nar: { x: 540, y: 1540, s: 0.7 } };
+  const POSE = LAND ? { big: { x: 960, y: 590, s: 0.7 }, nar: { x: 1610, y: 640, s: 0.58 } } : { big: { x: 540, y: 1060, s: 1.1 }, nar: { x: 540, y: 1540, s: 0.7 } };
   let C = null;
   function init() {
     const L = TL.lines;
@@ -85,6 +85,7 @@
     const stage = EP.stage(t, c) || '';
     const isBig = i => (EP.bigScenes || [0, last]).includes(i);
     const big = isBig(si), prevBig = si > 0 && isBig(si - 1);
+    if (EP.poses) Object.assign(POSE, EP.poses);
     const A = POSE[prevBig ? 'big' : 'nar'], B = POSE[big ? 'big' : 'nar'];
     const pk = si === 0 ? 1 : eo(seg(into, 0, 0.45));
     const P = { x: lerp(A.x, B.x, pk), y: lerp(A.y, B.y, pk), s: lerp(A.s, B.s, pk), big };
@@ -101,21 +102,22 @@
     const tf = `translate(${P.x - 350 * P.s} ${P.y - 480 * P.s}) scale(${P.s})`;
     const cat = `<g transform="${tf}">${drawCat(st)}${EP.catOver ? EP.catOver(c, st) : ''}</g>`;
     let flash = 0; for (const x of C.fl) if (t > x) flash = Math.max(flash, 1 - seg(t, x, x + 0.33));
-    const trans = si > 0 ? 1 - seg(into, 0, 0.2) : 0;
+    const trans = si > 0 && !EP.calm && !EP.steady ? 1 - seg(into, 0, 0.2) : 0;
     let logo = '';
     const lp = back(seg(t, L[last].end + 0.05, L[last].end + 0.5));
-    if (si === last && lp > 0) logo = `<g transform="translate(540 330) scale(${lp})">${K.text(0, 0, 150, 'Bilge Kedi')}${K.text(0, 110, 70, '⭐ Yarın yeni bir sır! ⭐', '#ffd84d')}</g>`;
+    if (si === last && lp > 0 && !EP.noLogo) logo = `<g transform="translate(${W / 2} ${LAND ? 150 : 330}) scale(${lp})">${K.text(0, 0, 150, 'Bilge Kedi')}${K.text(0, 110, 70, '⭐ Yarın yeni bir sır! ⭐', '#ffd84d')}</g>`;
     const front = EP.front ? EP.front(t, c) : '';
     document.getElementById('s').innerHTML = bg(t, c) +
-      `<g transform="translate(${sx} ${sy}) translate(540 960) scale(${lerp(1.08, 1, inP)}) translate(-540 -960)" opacity="${si === 0 ? 1 : lerp(0.2, 1, inP)}">${stage}</g>` +
+      `<g transform="translate(${sx} ${sy}) translate(${W / 2} ${H / 2}) scale(${EP.calm || EP.steady ? 1 : lerp(1.08, 1, inP)}) translate(${-W / 2} ${-H / 2})" opacity="${si === 0 || EP.calm || EP.steady ? 1 : lerp(0.2, 1, inP)}">${stage}</g>` +
       `<g transform="translate(${sx * 0.5} ${sy * 0.5})">${cat}</g>${front}${logo}` +
       `<rect width="${W}" height="${H}" fill="#fff" opacity="${Math.max(flash * 0.85, trans * 0.25)}"/>`;
     // altyazı: yalnızca söylenmiş kelimeler (ortalı)
     const cap = document.getElementById('cap'); const ch = C.CH.find(k => t >= k.s && t < k.e);
-    cap.style.top = (big ? 200 : (EP.capY || 1010)) + 'px';
+    cap.style.top = (LAND ? (EP.capY || 925) : big ? 200 : (EP.capY || 1010)) + 'px';
     if (ch && !(si === last && t > L[last].end)) {
       const vis = ch.words.filter(w => t >= w.s - 0.06); cap.innerHTML = vis.map((w, wi) => { const a = seg(t, w.s - 0.06, w.s + 0.1);
-        const sc = a < 1 ? lerp(0.4, 1.12, back(a)) : 1; const on = wi === vis.length - 1 && t < w.e + 0.3;
+        const sc = EP.calm ? 1 : a < 1 ? lerp(0.4, 1.12, back(a)) : 1; const on = wi === vis.length - 1 && t < w.e + 0.3;
+        if (EP.calm) return `<span style="opacity:${a};color:${on ? '#ffe9a8' : '#fff'}">${w.w}</span>`;
         return `<span style="transform:scale(${on ? Math.max(sc, 1.06) : sc}) rotate(${on ? -2 : 0}deg);color:${on ? '#ffd84d' : '#fff'}">${w.w}</span>`; }).join('');
     } else cap.innerHTML = '';
     let html = '';

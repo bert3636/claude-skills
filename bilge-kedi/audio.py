@@ -13,7 +13,7 @@ LINES = SCRIPT["lines"]
 LEAD, GAP, TAIL = 0.35, 0.30, 1.4
 
 async def tts(text):
-    c = edge_tts.Communicate(text, VOICE, rate=RATE, proxy=PROXY, boundary="WordBoundary")
+    c = edge_tts.Communicate(text, VOICE, rate=SCRIPT.get("rate", RATE), proxy=PROXY, boundary="WordBoundary")
     mp3, words = b"", []
     async for ch in c.stream():
         if ch["type"] == "audio": mp3 += ch["data"]
@@ -102,10 +102,20 @@ def sfx_tick(n=14, gap=0.07):
 def sfx_drop():
     t = t_(0.25); f = 1400*np.exp(-t*12)+500; ph = 2*np.pi*np.cumsum(f)/SR
     return 0.5*np.sin(ph)*env(len(t), 0.001, 0.07)
-SFX = dict(bubble=sfx_bubble, heart=sfx_heart, buzz=sfx_buzz, jump=sfx_jump, tick=sfx_tick, drop=sfx_drop, ding=sfx_ding, whoosh=sfx_whoosh, sparkle=sfx_sparkle, vinn=sfx_vinn, pop=sfx_pop,
+def sfx_count(n=5):
+    out = np.zeros(int((n+0.5)*SR))
+    for k in range(n):
+        b = 0.35*bell(880 if k < n-1 else 1320, 0.4, 0.1); st = int(k*SR); out[st:st+len(b)] += b
+    return out
+def sfx_yay():
+    c = sfx_chime(); sp = sfx_sparkle(1.2); out = np.zeros(max(len(c), len(sp)) + SR)
+    out[:len(c)] += c; out[int(0.1*SR):int(0.1*SR)+len(sp)] += sp
+    for k in range(4): p = sfx_pop(); st = int((0.05+k*0.12)*SR); out[st:st+len(p)] += 0.5*p
+    return out
+SFX = dict(count=sfx_count, yay=sfx_yay, bubble=sfx_bubble, heart=sfx_heart, buzz=sfx_buzz, jump=sfx_jump, tick=sfx_tick, drop=sfx_drop, ding=sfx_ding, whoosh=sfx_whoosh, sparkle=sfx_sparkle, vinn=sfx_vinn, pop=sfx_pop,
            swirl=sfx_swirl, click=sfx_click, boing=sfx_boing, chime=sfx_chime)
 
-def music(dur, bpm=112, tr=0):
+def music(dur, bpm=112, tr=0, calm=False):
     bpm = bpm; beat = 60/bpm; out = np.zeros(int(dur*SR)+8*SR)
     chords = [[60, 64, 67, 72], [57, 60, 64, 69], [53, 57, 60, 65], [55, 59, 62, 67]]  # C Am F G
     m2f = lambda m: 440*2**((m+tr-69)/12)
@@ -118,12 +128,13 @@ def music(dur, bpm=112, tr=0):
         # bas
         bs = 0.12*np.sin(2*np.pi*m2f(ch[0]-24)*t_(beat*1.8))*env(int(beat*1.8*SR), 0.01, 0.4)
         for k in (0, 2): s2 = int((b0+k*beat)*SR); out[s2:s2+len(bs)] += bs
-        # arpej (8'lik)
-        pat = [0, 2, 1, 3, 2, 1, 3, 2]
+        # arpej (8'lik; sakin modda müzik kutusu, 4'lük)
+        pat = [0, 2, 1, 3, 2, 1, 3, 2] if not calm else [0, 2, 3, 1]
         for k, p in enumerate(pat):
-            b = 0.09*bell(m2f(ch[p]+12), 0.6, 0.18); s2 = int((b0+k*beat/2)*SR); out[s2:s2+len(b)] += b
+            step = beat/2 if not calm else beat
+            b = (0.09 if not calm else 0.07)*bell(m2f(ch[p]+12+(12 if calm else 0)), 1.2 if calm else 0.6, 0.5 if calm else 0.18); s2 = int((b0+k*step)*SR); out[s2:s2+len(b)] += b
         # hafif ritim: shaker
-        for k in range(8):
+        for k in range(0 if calm else 8):
             n = int(0.05*SR); sh = 0.025*rng.standard_normal(n)*env(n, 0.001, 0.012)
             sh = sh - lp(sh, 0.3); s2 = int((b0+k*beat/2)*SR); out[s2:s2+n] += sh*(1.4 if k % 2 else 0.8)
     out = out[:int(dur*SR)]
@@ -139,8 +150,9 @@ def main():
         d = len(pcm)/SR
         timeline["lines"].append({"text": text, "start": round(t, 3), "end": round(t+d, 3),
                                   "words": [{"w": w["w"], "s": round(t+w["s"], 3), "e": round(t+w["e"], 3)} for w in words]})
-        voice_parts.append((t, pcm)); t += d + GAP
-    total = t - GAP + TAIL; timeline["duration"] = round(total, 3)
+        gi = SCRIPT.get("gaps", {}).get(str(len(voice_parts)), SCRIPT.get("gap", GAP))
+        voice_parts.append((t, pcm)); t += d + gi; last_gap = gi
+    total = t - last_gap + SCRIPT.get("tail", TAIL); timeline["duration"] = round(total, 3)
     N = int(total*SR); voice = np.zeros(N)
     for st, pcm in voice_parts: i = int(st*SR); voice[i:i+len(pcm)] += pcm
 
@@ -154,7 +166,7 @@ def main():
         for w in L[li]["words"]:
             if sub in w["w"].replace("I","ı").replace("İ","i").lower(): return w["s"]
         return L[li]["start"]
-    events = [("ding", 0.05)] + [("whoosh", L[i]["start"]-0.25) for i in range(1, len(L))]
+    events = [("ding", 0.05)] + ([] if SCRIPT.get("calm") or SCRIPT.get("no_whoosh") else [("whoosh", L[i]["start"]-0.25) for i in range(1, len(L))])
     for ev in SCRIPT["events"]:
         name, li, sub = ev[0], ev[1], ev[2]; off = ev[3] if len(ev) > 3 else 0
         x = word_t(li, sub) if sub else L[li]["start"]
@@ -167,7 +179,7 @@ def main():
         s = SFX[n](); i = int(max(0, x)*SR); sfx[i:i+len(s)] += s
     sfx = sfx[:N]
 
-    mus = music(total, SCRIPT.get("bpm", 112), SCRIPT.get("transpose", 0))
+    mus = music(total, SCRIPT.get("bpm", 112), SCRIPT.get("transpose", 0), SCRIPT.get("calm", False))
     speech_env = lp(np.abs(voice), 0.0005) > 0.004
     duck = lp(np.where(speech_env, 0.45, 1.0).astype(float), 0.0003)
     mix = voice*1.0 + 0.55*sfx + 0.8*mus*duck
