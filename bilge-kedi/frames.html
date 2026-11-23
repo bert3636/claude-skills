@@ -1,0 +1,108 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="node_modules/@fontsource/baloo-2/800.css">
+<link rel="stylesheet" href="node_modules/@fontsource/alfa-slab-one/400.css">
+<link rel="stylesheet" href="node_modules/@fontsource/jetbrains-mono/800.css">
+<link rel="stylesheet" href="node_modules/@fontsource/jost/600.css"><link rel="stylesheet" href="node_modules/@fontsource/jost/700.css"><link rel="stylesheet" href="node_modules/@fontsource/jost/800.css">
+<link rel="stylesheet" href="node_modules/@fontsource/patrick-hand/400.css">
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}svg{position:absolute;inset:0}</style>
+<script src="cat.js"></script><script src="styles.js"></script></head><body><svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+<script>
+const f = +new URLSearchParams(location.search).get('f'), t = 1.3, W = 1080, H = 1920, P = ST.PAL;
+// basit balina silueti (yan görünüş), ölçek s
+const whaleD = (x, y, s) => `M ${x} ${y} C ${x + 60 * s} ${y - 90 * s} ${x + 300 * s} ${y - 110 * s} ${x + 520 * s} ${y - 70 * s} C ${x + 640 * s} ${y - 50 * s} ${x + 720 * s} ${y - 20 * s} ${x + 790 * s} ${y - 60 * s} L ${x + 860 * s} ${y - 120 * s} L ${x + 840 * s} ${y - 20 * s} L ${x + 900 * s} ${y + 40 * s} L ${x + 800 * s} ${y + 10 * s} C ${x + 700 * s} ${y + 60 * s} ${x + 520 * s} ${y + 80 * s} ${x + 300 * s} ${y + 70 * s} C ${x + 140 * s} ${y + 64 * s} ${x + 20 * s} ${y + 40 * s} ${x} ${y} Z`;
+let s = `<defs>${ST.defs(t)}</defs>`;
+if (f === 1) { // HALFTONE DOSYA
+  s += ST.paper(W, H);
+  s += ST.halftone(0, 0, W, H, 24, 45, ST.fields.edge(W, H, 170), P.dos.pink, 0.62, 'style="mix-blend-mode:multiply" opacity="0.5"');
+  s += `<g style="mix-blend-mode:multiply">` + ST.halftone(0, 0, W, H, 22, 15, ST.fields.radial(620, 1080, 120, 560), P.dos.yellow, 0.72) + `</g>`;
+  // dev numara
+  s += `<clipPath id="num"><text x="1100" y="940" text-anchor="end" font-family="'Alfa Slab One'" font-size="640">07</text></clipPath><g clip-path="url(#num)" style="mix-blend-mode:multiply" opacity="0.5">${ST.halftone(300, 400, 800, 600, 20, 30, () => 0.62, P.dos.cobalt, 0.7)}</g>`;
+  s += ST.chip(50, 110, 'DOSYA #07') + ST.chip(50, 175, 'KANIT 1/4', P.dos.cobalt) + `<circle cx="900" cy="98" r="14" fill="${P.dos.red}"/><text x="926" y="110" font-family="'JetBrains Mono'" font-weight="800" font-size="34" fill="${P.dos.ink}">KAYIT</text>`;
+  s += ST.headline(60, 380, 150, 'MAVİ', P.dos.ink) + ST.headline(60, 540, 150, 'BALİNA', P.dos.ink);
+  s += `<text x="66" y="630" font-family="'JetBrains Mono'" font-weight="800" font-size="36" fill="${P.dos.ink}">ŞÜPHELİ: DÜNYANIN EN BÜYÜK HAYVANI</text>`;
+  // boy cetveli
+  for (let i = 0; i <= 10; i++) s += `<line x1="${980}" y1="${700 + i * 100}" x2="${i % 5 ? 1030 : 1050}" y2="${700 + i * 100}" stroke="${P.dos.ink}" stroke-width="5"/><text x="975" y="${712 + i * 100}" text-anchor="end" font-family="'JetBrains Mono'" font-weight="800" font-size="26" fill="${P.dos.ink}">${30 - i * 3}m</text>`;
+  s += ST.cat({ glint: 1, brow: 0.8, mouth: 0.35, lookX: -0.3 }, { x: 560, y: 1180, s: 0.95 }, 'ink');
+  // büyüteç
+  s += `<g transform="translate(250 1250) rotate(-30)" filter="url(#stOutline)"><circle r="95" fill="${P.dos.paper}" stroke="${P.dos.yellow}" stroke-width="26"/><rect x="-18" y="110" width="36" height="170" rx="16" fill="${P.dos.red}"/></g>`;
+  s += ST.stamp(760, 1480, 'ÇÖZÜLDÜ!', P.dos.red, -12, 0.9, 100);
+  s += ST.captionBar(540, 1720, 900, ['Bir', 'balinanın', 'boyu', '30', 'metre!'], '30', 58);
+  s += ST.grain(W, H, t, P.dos.paper, P.dos.ink);
+}
+if (f === 2) { // ÖLÇEK YAKINLAŞTIRMA
+  const z = P.zoom; s += `<rect width="${W}" height="${H}" fill="${z.night}"/>`;
+  const R = ST.rng(4); for (let i = 0; i < 90; i++) s += `<circle cx="${R() * W}" cy="${R() * H}" r="${R() * 2.6 + 1}" fill="${[z.mist, z.cream, z.sun][i % 3]}"/>`;
+  s += ST.glowRings(540, 760, 330) + ST.twoTone('ocean', `M 210 760 a 330 330 0 1 0 660 0 a 330 330 0 1 0 -660 0`, z.blue, z.blueS);
+  s += ST.twoTone('wh', whaleD(330, 780, 0.5), z.mint, z.mintS) + `<circle cx="372" cy="760" r="7" fill="${z.night}"/>`;
+  // minik kril + sonraki durak halkası
+  s += `<ellipse cx="705" cy="960" rx="9" ry="4" fill="${z.coral}"/>` + ST.nextStop(705, 960, 34, 'SONRAKİ DURAK', 'Kril: 1 cm', 760, 1150, t);
+  s += `<text x="70" y="250" font-family="'Jost'" font-weight="700" font-size="104" fill="${z.cream}">Ne kadar</text><text x="70" y="370" font-family="'Jost'" font-weight="700" font-size="104" fill="${z.sun}">büyük?</text>`;
+  s += ST.cat({ lookX: 0.8, lookY: -0.4, brow: 0.6, glint: 0.6 }, { x: 270, y: 1440, s: 0.6 }, 'flat');
+  s += ST.sightLine(330, 1310, 690, 990, t);
+  s += ST.scaleRibbon(600, 1520, 400, 0.66, ['1 cm', '1 m', '30 m'], '30 m');
+  s += `<rect x="60" y="1690" width="6" height="96" fill="${z.sun}"/><text x="88" y="1740" font-family="'Jost'" font-weight="600" font-size="42" fill="${z.cream}">Minicik krillerle beslenir…</text>
+    <text x="88" y="1784" font-family="'Jost'" font-weight="600" font-size="30" fill="${z.mist}">ama kendisi bir otobüsten uzun!</text>`;
+}
+if (f === 3) { // BLUEPRINT
+  s += `<rect width="${W}" height="${H}" fill="${P.bp.table}"/><g transform="translate(40 60) rotate(-0.6)">${ST.paper(1000, 1800, 'bp')}</g>`;
+  s += `<text x="90" y="200" font-family="'Patrick Hand'" font-size="84" fill="${P.bp.line}">BALİNA KALBİ — Şekil 1</text>`;
+  s += ST.bpLine('M 90 230 H 990', 1, 2);
+  // kalp (basit anatomik)
+  const heart = 'M 300 520 C 220 440 200 330 300 300 C 360 280 400 320 420 360 C 440 320 490 280 550 300 C 650 340 620 460 540 540 L 420 700 Z';
+  s += ST.bpLine(heart, 1, 4) + ST.bpLine('M 360 300 C 360 240 380 220 420 220 M 470 300 C 470 250 500 230 540 240', 1, 3);
+  for (let i = 0; i < 9; i++) s += ST.bpLine(`M ${330 + i * 26} ${560 - i * 10} l 60 -60`, 1, 1.2, 'opacity="0.7"');
+  s += ST.dim(240, 720, 600, 720, '1,5 m', 1, 40) + ST.dim(640, 300, 640, 700, '1,2 m', 1, -40);
+  s += ST.balloon(420, 230, 1, 600, 360) + ST.balloon(300, 420, 2, 160, 560);
+  // araba karşılaştırma
+  s += `<text x="90" y="930" font-family="'Patrick Hand'" font-size="64" fill="${P.bp.line}">Şekil 2 — Bir araba ile kıyas</text>`;
+  s += ST.bpLine('M 160 1160 L 190 1080 L 300 1040 L 520 1040 L 620 1090 L 700 1100 L 710 1160 Z', 1, 3.2) + ST.bpLine('M 230 1160 a 40 40 0 1 0 80 0 a 40 40 0 1 0 -80 0 M 560 1160 a 40 40 0 1 0 80 0 a 40 40 0 1 0 -80 0', 1, 3.2);
+  s += ST.bpLine('M 160 1260 L 190 1180 L 300 1140 L 520 1140 L 620 1190 L 700 1200 L 710 1260 Z', 0, 3.2) + ST.bpLine('M 880 1240 C 760 1150 730 1040 820 1010 C 860 1000 880 1030 890 1050 C 900 1030 925 1000 965 1010 C 1050 1040 1010 1150 900 1240 Z', 1, 3);
+  s += `<text x="830" y="1290" font-family="'Patrick Hand'" font-size="40" fill="${P.bp.line}">kalp</text><text x="350" y="1235" font-family="'Patrick Hand'" font-size="40" fill="${P.bp.line}">araba</text>`;
+  s += ST.bpLine('M 60 1300 H 1020 V 1830 H 60 Z', 1, 2) + ST.bpLine('M 60 1380 H 1020', 1, 1.25);
+  s += `<text x="90" y="1360" font-family="'Patrick Hand'" font-size="44" fill="${P.bp.line}">NOT / 1</text><text x="90" y="1460" font-family="'Patrick Hand'" font-size="52" fill="${P.bp.line}">Derine dalınca kalbi dakikada</text>
+    <text x="90" y="1530" font-family="'Patrick Hand'" font-size="52" fill="${P.bp.line}">sadece 2 kez atar!</text>`;
+  s += ST.cat({ lookX: -0.5, brow: 0.6 }, { x: 830, y: 1700, s: 0.42 }, 'line');
+  s += ST.stamp(330, 1720, 'ONAYLANDI', P.bp.stamp, -8, 0.8, 80);
+}
+if (f === 4) { // İZOMETRİK
+  s += `<rect width="${W}" height="${H}" fill="${P.iso.ground}"/>`;
+  for (let i = 0; i < 40; i++) for (let j = 0; j < 70; j++) s += (i + j) % 2 ? '' : `<circle cx="${i * 30}" cy="${j * 30}" r="1.6" fill="#d8cfbe"/>`;
+  const o = { x: 470, y: 930, k: 1 };
+  s += `<ellipse cx="470" cy="1190" rx="380" ry="70" fill="#2b2440" opacity="0.15"/>`;
+  const L = [['#1d3f7a', 150, 'KARANLIK BÖLGE', '1000 m +'], ['#2f6cc0', 160, 'ALACAKARANLIK', '200–1000 m'], ['#4fa8e8', 170, 'GÜNEŞLİ BÖLGE', '0–200 m']];
+  let z0 = 0; const zs = [];
+  L.forEach(([c, h]) => { s += ST.isoBox(-200, -200, z0, 400, 400, h, c, o); zs.push(z0 + h / 2); z0 += h; });
+  // kesit yüzünde balina silueti (y = 200 ön-sol yüz)
+  const wz = zs[2], wpts = [[-150, 0], [-110, 22], [0, 30], [90, 20], [130, 10], [160, 34], [150, 0], [160, -30], [130, -8], [40, -24], [-90, -20]];
+  s += `<path d="M ${wpts.map(([x, z]) => ST.isoP(x, 200, wz + z, o).join(' ')).join(' L ')} Z" fill="#c9d3f5"/>`;
+  const pts = L.map((l, i) => ST.isoP(200, -200, zs[i], o));
+  L.forEach(([c, h, a2, b2], i) => s += ST.pin(pts[i][0] + 12, pts[i][1], 40, a2, b2, 1).replace(/font-size="30"/g, 'font-size="24"').replace(/font-size="26"/g, 'font-size="22"'));
+  const wp = ST.isoP(-20, 200, wz, o); s += ST.pin(wp[0], wp[1] + 140, 0, '', '', -1).replace(/<path[^>]*>/, '') + `<path d="M ${wp[0]} ${wp[1] + 10} V ${wp[1] + 640}" stroke="${P.iso.ink}" stroke-width="2.5"/>
+    <text x="${wp[0] - 140}" y="${wp[1] + 690}" font-family="'Jost'" font-weight="600" font-size="28" letter-spacing="3" fill="${P.iso.ink}">MAVİ BALİNA burada</text>`;
+  s += `<text x="70" y="180" font-family="'Jost'" font-weight="600" font-size="58" letter-spacing="7" fill="${P.iso.ink}">OKYANUSUN KATLARI</text>`;
+  // Isotype: 1 balina = 30 fil ağırlığı
+  s += `<text x="70" y="1520" font-family="'Jost'" font-weight="600" font-size="34" letter-spacing="4" fill="${P.iso.ink}">BİR BALİNA ≈ 30 FİL</text>`;
+  for (let i = 0; i < 30; i++) { const x = 90 + (i % 10) * 90, y = 1590 + Math.floor(i / 10) * 80;
+    s += `<g transform="translate(${x} ${y})"><rect x="-26" y="-18" width="52" height="34" rx="14" fill="#8d8a9a"/><rect x="-26" y="12" width="10" height="16" fill="#8d8a9a"/><rect x="14" y="12" width="10" height="16" fill="#8d8a9a"/><path d="M 24 -6 q 18 6 10 30" stroke="#8d8a9a" stroke-width="8" fill="none" stroke-linecap="round"/></g>`; }
+  s += ST.cat({ lookX: -0.6, lookY: 0.4, brow: 0.5 }, { x: 880, y: 1330, s: 0.42 }, 'flat');
+}
+if (f === 5) { // SCRATCH FİLM
+  s += ST.paper(W, H, 'scr');
+  s += `<g filter="url(#stHalo)">`;
+  // yukarıdan gelen tarama ışığı
+  for (let k = 0; k < 4; k++) s += ST.hatch(0, 0, W, 520 - k * 110, t, 16 + k * 6, 0.35, P.scr.cream, 10 + k, 0.35);
+  // balina: mavi boya + krem kazıma
+  const wp = []; for (let i = 0; i <= 60; i++) { const a = i / 60 * Math.PI * 2; wp.push([540 + Math.cos(a) * 380 * (1 - 0.25 * Math.max(0, Math.cos(a))), 980 + Math.sin(a) * 120 * (1 + 0.3 * Math.cos(a))]); }
+  s += `<path d="M ${wp.map(p => p.join(' ')).join(' L ')} Z" fill="${P.scr.blue}" opacity="0.55"/>`;
+  s += ST.scratch(wp, t, 5, P.scr.cream, 3, 1) + ST.scratch([[910, 960], [990, 880], [980, 980], [1000, 1060], [910, 1000]], t, 5, P.scr.cream, 3, 2);
+  for (let i = 0; i < 8; i++) s += ST.scratch([[260 + i * 60, 1030], [280 + i * 60, 1080]], t, 3, P.scr.cream, 2, 20 + i);
+  s += ST.scratch([[260, 950], [262, 952]], t, 10, P.scr.cream, 2, 40);
+  // kabarcıklar
+  for (let i = 0; i < 9; i++) s += ST.scratch(ST.circlePts(240 + i * 25, 860 - i * 60, 10 + i % 3 * 4, 10 + i % 3 * 4, 12), t, 3, P.scr.cream, 2, 60 + i);
+  s += `<text x="70" y="1400" font-family="'Jost'" font-weight="800" font-size="150" fill="${P.scr.cream}">DERİNLERDE</text>`;
+  s += `</g>`;
+  s += ST.cat({ lookX: 0.6, lookY: -0.5, brow: 0.7 }, { x: 800, y: 1660, s: 0.5 }, 'scratch');
+  s += `<text x="70" y="1700" font-family="'Jost'" font-weight="600" font-size="44" fill="${P.scr.cream}">Şarkısı kilometrelerce uzağa gider.</text>`;
+}
+document.getElementById('s').innerHTML = s;
+</script></body></html>
