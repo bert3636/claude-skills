@@ -1,0 +1,10 @@
+{"v2":true,"bpm":112,"transpose":3,
+"lines":["Her gün on altı kez güneşin doğduğu bir ev biliyor musun?",
+"Dünya'nın dört yüz kilometre üstünde, Uluslararası Uzay İstasyonu dolaşır.",
+"Saatte yirmi sekiz bin kilometre hızla gider. Dünya'nın etrafını doksan dakikada döner!",
+"Bu yüzden astronotlar bir günde on altı kez gün doğumu görür!",
+"İçeride her şey süzülür. Astronotlar duvara bağlı uyku tulumlarında uyur.",
+"Su damlaları bile havada top gibi yüzer!",
+"Dosya çözüldü: Uzay istasyonu, gökyüzünde dönen bir ev!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["pop",0,"altı"],["blip",1,"uzay"],["whoosh",2,"yirmi"],["tick",2,"doksan"],["sparkle",3,"gün"],["pop",4,"süzülür"],["boing",4,"tulumlarında"],["bubble",5,"damlaları"],["stamp",6,"çözüldü"]]}

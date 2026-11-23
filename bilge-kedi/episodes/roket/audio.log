@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/home/user/claude-skills/bilge-kedi/audio.py", line 206, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/claude-skills/bilge-kedi/audio.py", line 158, in main
+    res = asyncio.run(all_lines())
+  File "/usr/local/lib/python3.13/asyncio/runners.py", line 196, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/local/lib/python3.13/asyncio/base_events.py", line 726, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/home/user/claude-skills/bilge-kedi/audio.py", line 157, in all_lines
+    async def all_lines(): return [await tts(l) for l in LINES]
+                                   ^^^^^^^^^^^^
+  File "/home/user/claude-skills/bilge-kedi/audio.py", line 18, in tts
+    async for ch in c.stream():
+    ...<2 lines>...
+            words.append({"w": ch["text"], "s": ch["offset"] / 1e7, "e": (ch["offset"] + ch["duration"]) / 1e7})
+  File "/usr/local/lib/python3.13/site-packages/edge_tts/communicate.py", line 588, in stream
+    async for message in self.__stream():
+        yield message
+  File "/usr/local/lib/python3.13/site-packages/edge_tts/communicate.py", line 562, in __stream
+    raise NoAudioReceived(
+        "No audio was received. Please verify that your parameters are correct."
+    )
+edge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.

@@ -1,0 +1,10 @@
+{"v2":true,"bpm":110,"transpose":0,
+"lines":["Uzayda bağırsan, sesini kimse duyar mı?",
+"Ses, havadaki minicik parçacıkların birbirini itmesiyle yolculuk eder.",
+"Tıpkı sırayla devrilen domino taşları gibi!",
+"Ama uzayda neredeyse hiç hava yoktur. Ses taşınamaz!",
+"Bu yüzden astronotlar telsizle konuşur. Telsiz dalgaları boşlukta da gider!",
+"Yani uzay, kocaman ve sessiz bir yer.",
+"Dosya çözüldü: Sesin yolculuk etmesi için havaya ihtiyacı var!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["pop",0,"bağırsan"],["bubble",1,"parçacıkların"],["tick",2,"domino"],["pop",3,"hiç"],["blip",4,"telsizle"],["sparkle",4,"dalgaları"],["stamp",6,"çözüldü"]]}

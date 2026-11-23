@@ -1,0 +1,10 @@
+{"v2":true,"bpm":106,"transpose":-4,
+"lines":["Evimizin adresini uzaydan yazsak ne olurdu?",
+"Dünya, Güneş Sistemi'nde. Güneş Sistemi de dev bir galaksinin içinde.",
+"Galaksimizin adı Samanyolu! Spiral kolları olan, dönen bir yıldız girdabı.",
+"İçinde yüz milyarlarca yıldız var!",
+"Işık bile bir ucundan öbür ucuna, yüz bin yılda gider!",
+"Karanlık bir gecede gökyüzüne bak: O süt gibi parlak şerit, Samanyolu'dur!",
+"Dosya çözüldü: Adresimiz, Samanyolu Galaksisi!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["pop",0,"adresini"],["swirl",1,"galaksinin"],["sparkle",2,"samanyolu"],["tick",3,"milyarlarca"],["whoosh",4,"ışık"],["sparkle",5,"şerit"],["stamp",6,"çözüldü"]]}

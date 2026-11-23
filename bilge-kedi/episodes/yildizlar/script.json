@@ -1,0 +1,10 @@
+{"v2":true,"bpm":104,"transpose":5,
+"lines":["Yıldızlar neden göz kırpar, hiç düşündün mü?",
+"Bir yıldızın ışığı bize gelmek için çok uzun bir yolculuk yapar.",
+"Ama son anda, havamızın içinden geçmek zorundadır.",
+"Hava sürekli hareket eder ve ışığı sağa sola büker.",
+"İşte bu yüzden yıldızlar titrek görünür, sanki göz kırpıyormuş gibi!",
+"Uzaydaki astronotlar için ise yıldızlar hiç göz kırpmaz!",
+"Dosya çözüldü: Göz kırpan, aslında havamız!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["sparkle",0,"göz"],["blip",1,"ışığı"],["whoosh",2,"havamızın"],["swirl",3,"büker"],["sparkle",4,"titrek"],["ding",5,"hiç"],["stamp",6,"çözüldü"]]}

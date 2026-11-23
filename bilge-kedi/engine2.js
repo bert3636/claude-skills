@@ -40,7 +40,7 @@
     return s;
   }
   function headline(lines, p, mode) { // dosya başlığı: harf harf düşer
-    let s = ''; lines.forEach((ln, k) => { const size = ln.length > 9 ? 118 : 150, y = 340 + k * 150;
+    let s = ''; lines.forEach((ln, k) => { const size = ln.length > 8 ? 118 : 150, y = 340 + k * 150;
       const chars = [...ln]; let x = 60; const parts = [];
       chars.forEach((ch, i) => { const q = cl(p * (chars.length * 0.07 + 0.5) / 0.5 - i * 0.07 / 0.5 - k * 0.6); const dy = (1 - back(Math.min(1, q))) * -80;
         parts.push(`<tspan dy="0" opacity="${q > 0 ? 1 : 0}">${ch}</tspan>`); });

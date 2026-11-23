@@ -1,0 +1,10 @@
+{"v2":true,"bpm":116,"transpose":-3,
+"lines":["Gökyüzünde kuyruğu olan bir yıldız gördün mü?",
+"Aslında o bir yıldız değil, kuyruklu yıldız! Buz ve tozdan yapılmış kirli bir kartopu.",
+"Güneş'e yaklaştıkça buzları erir ve arkasında parlak bir kuyruk oluşur.",
+"Ve ilginç bir sır: Kuyruğu her zaman Güneş'in tersini gösterir!",
+"En ünlüsü Halley Kuyruklu Yıldızı. Dünya'ya yetmiş altı yılda bir uğrar.",
+"Onu görmek istiyorsan, iki bin altmış bir yılını bekle!",
+"Dosya çözüldü: Kuyruklu yıldız, uzayın buzlu gezgini!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["pop",0,"kuyruğu"],["blip",1,"kartopu"],["swirl",2,"erir"],["sparkle",2,"kuyruk"],["pop",3,"tersini"],["tick",4,"yetmiş"],["ding",5,"bekle"],["stamp",6,"çözüldü"]]}
