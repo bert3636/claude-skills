@@ -5,3 +5,6 @@ ay | Ay: yansıyan ışık, düşük çekim, ayak izleri
 gokkusagi | Gökkuşağı: yedi renk, uçaktan daire
 arilar | Arılar: milyonlarca çiçek, dans, bozulmayan bal
 kartanesi | Kar tanesi: altı kol, her biri eşsiz
+mavibalina | #07 Mavi balina: 30 m, kril, kalp ≈ araba, 30 fil, şarkı (v2)
+karinca | #08 Karınca yuvası: odalar, kraliçe, kiler, 10x yük (v2)
+yaprak | #09 Fotosentez: kloroplast, kök-yaprak, şeker ve oksijen (v2)

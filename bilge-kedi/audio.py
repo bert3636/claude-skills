@@ -112,7 +112,19 @@ def sfx_yay():
     out[:len(c)] += c; out[int(0.1*SR):int(0.1*SR)+len(sp)] += sp
     for k in range(4): p = sfx_pop(); st = int((0.05+k*0.12)*SR); out[st:st+len(p)] += 0.5*p
     return out
-SFX = dict(count=sfx_count, yay=sfx_yay, bubble=sfx_bubble, heart=sfx_heart, buzz=sfx_buzz, jump=sfx_jump, tick=sfx_tick, drop=sfx_drop, ding=sfx_ding, whoosh=sfx_whoosh, sparkle=sfx_sparkle, vinn=sfx_vinn, pop=sfx_pop,
+def sfx_stamp():
+    t = t_(0.6); f = 110*np.exp(-t*9)+38; ph = 2*np.pi*np.cumsum(f)/SR
+    boom = 0.9*np.sin(ph)*env(len(t), 0.001, 0.18)
+    n = int(0.03*SR); click = rng.standard_normal(n)*env(n, 0.0005, 0.006)
+    out = boom.copy(); out[:n] += 0.8*click
+    cr = rng.standard_normal(len(t))*env(len(t), 0.001, 0.05)*0.15; return out + cr
+def sfx_blip():
+    out = np.zeros(int(0.9*SR))
+    for k in range(6):
+        d = 0.06; tt = t_(d); f = 900 + k*140 + 600*tt/d; ph = 2*np.pi*np.cumsum(f)/SR
+        b = 0.28*np.sin(ph)*env(len(tt), 0.002, 0.03); st = int(k*0.12*SR); out[st:st+len(b)] += b
+    return out
+SFX = dict(stamp=sfx_stamp, blip=sfx_blip, count=sfx_count, yay=sfx_yay, bubble=sfx_bubble, heart=sfx_heart, buzz=sfx_buzz, jump=sfx_jump, tick=sfx_tick, drop=sfx_drop, ding=sfx_ding, whoosh=sfx_whoosh, sparkle=sfx_sparkle, vinn=sfx_vinn, pop=sfx_pop,
            swirl=sfx_swirl, click=sfx_click, boing=sfx_boing, chime=sfx_chime)
 
 def music(dur, bpm=112, tr=0, calm=False):

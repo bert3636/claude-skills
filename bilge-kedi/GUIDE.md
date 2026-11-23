@@ -1,5 +1,32 @@
 # Bilge Kedi — Shorts üretim rehberi
 
+> **GÜNCEL STİL (v2): HALFTONE DOSYA.** Yeni bölümlerin HEPSİ v2 ile yapılır (`"v2": true`, `engine2.js`).
+> Eski v1 bölümleri (ahtapot, ay, gokkusagi, arilar, kartanesi) yalnızca arşivdir; onları örnek alma.
+
+## v2 stili — Halftone Dosya + Ölçek Yakınlaştırma + İzometrik
+
+- **Çerçeve (dosya):** her video bir vaka dosyasıdır: "DOSYA #NN". Krem kâğıt, halftone noktalar, kalın slab başlık
+  (kaymış baskı gölgesi), dev halftone numara, KAYIT ışığı, "KANIT n/N" çipi, sonda kırmızı **ÇÖZÜLDÜ!** damgası.
+- **Kedi:** `cat_ht.js` (`drawCatHT`): halftone karakter, smokin + gözlük + papyon. DEĞİŞTİRME. İfadeler: `blink, mouth,
+  happy, brow, ear, glint, lookX, lookY, tail`. Çizgisi motor tarafından titretilir (boil).
+- **Anlatım sahneleri YALNIZCA iki stilde:**
+  - `zoom` = Ölçek Yakınlaştırma: gece mavisi zemin, düz iki tonlu şekiller (`ST.twoTone`), ışık halkaları (`ST.glowRings`),
+    sarı "sonraki durak" halkası (`ST.nextStop`), noktalı nişan çizgisi (`ST.sightLine`), köşede ölçek şeridi (`ST.scaleRibbon`).
+    Kamera bir ölçekten ötekine log-ölçekli yakınlaşır (örnek: `yaprak` sahne 1, `karinca` sahne 1).
+  - `iso` = İzometrik İnfografik: açık zemin, üç tonlu bloklar (`ST.isoBox`, `ST.isoP`), etiket iğneleri (`ST.pin`),
+    kesit yüzünde iç yapı, sayıyı tekrar eden ikonlarla göster (Isotype; örnek: `mavibalina` 30 fil).
+  - Blueprint ve scratch film KULLANILMAZ.
+- **Yapı (7–8 satır, 26–34 sn):** `modes` dizisi satır başına sahne türü. Tipik: `['dos','zoom','zoom','iso','iso','dos','dos']`.
+  Satır 0 = kanca sorusu (dos, başlık + dev numara + sticker), ortalar = kanıtlar (zoom/iso), sondan bir önceki =
+  "Dosya çözüldü: ..." (dos + damga), son = "Bilge Kedi'yle merakını kaybetme!".
+- **Örnekler:** `episodes/mavibalina`, `episodes/karinca`, `episodes/yaprak`. Yeni bölüme başlamadan EN AZ İKİSİNİ oku.
+- `script.json`: `{"v2": true, "bpm":..., "transpose":..., "lines": [...], "events": [...]}`. Damga için
+  `["stamp", satır, "çözüldü"]`, nişan çizgileri için `"blip"`. Damga sahne sonunda kaybolsun: `end: c.sceneStart(son)`.
+- `ep.js` v2 API: `caseNo, exhibits, modes, heads{si:[satırlar]}, subs{si:metin}, bigNum{si:'07'}, init(c), stage(t,c),
+  catPos(c), cat(st,c), stamps(c), stickers(c), front(t,c), haloInk, edgeInk`. Yardımcılar `K2` (seg, eo, back, lerp) ve `ST`.
+- Dosya numarası: `topics.txt`'teki en büyük numaranın bir fazlası.
+
+
 Gözlüklü, papyonlu smokin (siyah-beyaz) bir kedi; çocuklara tek bir konuyu ~25 saniyede, sesli ve
 hızlı anlatır. Bu klasör her şeyi üretir: ses (Türkçe TTS + sentez müzik/efekt), animasyon, MP4.
 

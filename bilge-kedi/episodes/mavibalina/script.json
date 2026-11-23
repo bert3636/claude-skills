@@ -1,0 +1,11 @@
+{"v2":true,"bpm":114,"transpose":-2,
+"lines":["Dünyanın en büyük hayvanı kim, biliyor musun?",
+"Okyanusun derinliklerinde dev bir şüpheli yüzüyor: Mavi balina!",
+"Boyu tam otuz metre! Yani üç otobüs arka arkaya!",
+"Ama en sevdiği yemek, minicik kriller. Her gün tonlarca kril yer!",
+"Kalbi küçük bir araba kadar büyük. Ağırlığı da otuz fil kadar!",
+"Şarkı söyler gibi seslenir. Sesi kilometrelerce uzağa gider!",
+"Dosya kapandı: Mavi balina, dünyanın en büyük hayvanı!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["pop",0,"büyük"],["blip",1,"şüpheli"],["pop",1,"balina"],["pop",2,"otobüs"],["pop",2,"arka",0.25],["pop",2,"arkaya",0.1],
+["blip",3,"minicik"],["bubble",3,"tonlarca"],["heart",4,"kalbi"],["tick",4,"otuz"],["swirl",5,"şarkı"],["sparkle",5,"kilometrelerce"],["stamp",6,"kapandı"]]}

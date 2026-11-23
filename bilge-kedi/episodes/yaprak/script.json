@@ -1,0 +1,10 @@
+{"v2":true,"bpm":110,"transpose":4,
+"lines":["Ağaçlar güneş ışığından yemek yapabilir, biliyor musun?",
+"Bir yaprağa yakından bakalım. Daha yakından, daha da yakından!",
+"İçinde minicik yeşil fabrikalar var. Güneş ışığını yakalıyorlar!",
+"Kökler topraktan su, yapraklar da havadan malzeme topluyor.",
+"Sonuç: Ağaca şekerli bir yemek, bize de tertemiz oksijen!",
+"Yani her nefesimizde bir ağaca teşekkür etmeliyiz!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["sparkle",0,"güneş"],["blip",1,"yaprağa"],["swirl",1,"daha"],["blip",2,"fabrikalar"],["sparkle",2,"yakalıyorlar"],
+["drop",3,"su"],["bubble",3,"havadan"],["pop",4,"şekerli"],["bubble",4,"oksijen"],["stamp",5,"teşekkür"]]}

@@ -1,0 +1,11 @@
+{"v2":true,"bpm":118,"transpose":1,
+"lines":["Toprağın altında koca bir şehir olduğunu biliyor muydun?",
+"Parktaki minicik bir deliğe yakından bakalım. Daha yakından!",
+"İşte karınca yuvası! İçinde odalar ve uzun tüneller var.",
+"Bir odada kraliçe yumurtalarını bırakır. Başka bir odada yavrular büyür.",
+"Bir de kiler var! Karıncalar yiyeceklerini burada saklar.",
+"Ve bir karınca, kendi ağırlığının on katından fazlasını taşıyabilir!",
+"Dosya çözüldü: Karıncalar, toprağın altındaki minik mühendisler!",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["pop",0,"şehir"],["blip",1,"deliğe"],["swirl",1,"daha"],["pop",2,"karınca"],["drop",2,"tüneller"],["heart",3,"kraliçe"],["pop",3,"yavrular"],
+["pop",4,"kiler"],["tick",4,"saklar"],["jump",5,"taşıyabilir"],["boing",5,"on"],["stamp",6,"çözüldü"]]}

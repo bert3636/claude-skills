@@ -3,8 +3,8 @@
 const { chromium } = require('playwright'); const fs = require('fs'); const { execFileSync } = require('child_process');
 (async () => {
   const ep = process.argv[2], mode = process.argv[3], dir = `episodes/${ep}`;
-  const land = !!JSON.parse(fs.readFileSync(`${dir}/script.json`, 'utf8')).land;
-  const vw = land ? 1920 : 1080, vh = land ? 1080 : 1920, page = land ? 'player_h.html' : 'player.html';
+  const SC = JSON.parse(fs.readFileSync(`${dir}/script.json`, 'utf8')), land = !!SC.land;
+  const vw = land ? 1920 : 1080, vh = land ? 1080 : 1920, page = SC.v2 ? 'player2.html' : land ? 'player_h.html' : 'player.html';
   const b = await chromium.launch();
   async function open() {
     const p = await b.newPage({ viewport: { width: vw, height: vh } });
