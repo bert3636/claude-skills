@@ -1,0 +1,9 @@
+{"v2":true,"land":true,"bpm":112,"transpose":0,"gap":0.6,"tail":1.6,
+"gaps":{"0":1.2,"1":1.2,"2":1.2,"3":1.2},
+"lines":["Merhaba dedektif! Ben Bilge Kedi. Bugün masamda üç gizli dosya var!",
+"İlk dosya: Dünyanın en büyük hayvanı!",
+"İkinci dosya: Toprağın altındaki gizli şehir!",
+"Üçüncü dosya: Işıktan yemek yapan ağaçlar!",
+"Üç dosya da çözüldü! Sence en şaşırtıcı hangisiydi?",
+"Bilge Kedi'yle merakını kaybetme!"],
+"events":[["pop",0,"üç"],["sparkle",0,"gizli"],["pop",1,null],["whoosh",1,"@end"],["pop",2,null],["whoosh",2,"@end"],["pop",3,null],["whoosh",3,"@end"],["stamp",4,"çözüldü"]]}

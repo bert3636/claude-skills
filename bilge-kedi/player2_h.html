@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="node_modules/@fontsource/baloo-2/800.css">
+<link rel="stylesheet" href="node_modules/@fontsource/alfa-slab-one/400.css">
+<link rel="stylesheet" href="node_modules/@fontsource/jetbrains-mono/800.css">
+<link rel="stylesheet" href="node_modules/@fontsource/jost/600.css"><link rel="stylesheet" href="node_modules/@fontsource/jost/700.css">
+<style>
+ html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#000}
+ svg{position:absolute;inset:0}
+ #cap{position:absolute;left:50%;transform:translateX(-50%);max-width:1240px;display:none;flex-wrap:wrap;justify-content:center;gap:0 18px;
+   background:#151a3a;border-radius:70px;padding:12px 40px 18px;box-shadow:12px 12px 0 #2f5fd0;
+   font-family:'Baloo 2';font-weight:800;font-size:58px;line-height:1.1;color:#fff3dc;white-space:nowrap}
+ #cap span{display:inline-block;transform-origin:50% 70%}
+ #stk{position:absolute;inset:0;font-family:'Alfa Slab One';color:#fff;-webkit-text-stroke:16px #151a3a;paint-order:stroke fill;text-align:center}
+</style>
+<script>window.LAND=true</script><script src="cat.js"></script><script src="styles.js"></script><script src="cat_ht.js"></script><script src="engine2.js"></script>
+<script>const EPN=new URLSearchParams(location.search).get('ep');
+document.write(`<script src="episodes/${EPN}/timeline.js"><\/script><script src="episodes/${EPN}/ep.js"><\/script>`);</script>
+</head><body><svg id="s" width="1920" height="1080" viewBox="0 0 1920 1080"></svg><div id="cap"></div><div id="stk"></div>
+<script>renderAt(0)</script></body></html>

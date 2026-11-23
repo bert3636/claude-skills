@@ -2,14 +2,14 @@
 // Bölüm: window.EP = { caseNo, modes:[ 'dos'|'zoom'|'iso' ... satır başına ], heads:{si:[satırlar]}, stage(t,c), cat(st,c),
 //   stamps(c) -> [{t, txt, x, y, rot, col, size}], stickers(c), bigNum:{si:'01'} }
 (function () {
-  const W = 1080, H = 1920, P = ST.PAL;
+  const LAND = !!window.LAND, W = LAND ? 1920 : 1080, H = LAND ? 1080 : 1920, P = ST.PAL;
   const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x)), seg = (t, a, b) => cl((t - a) / (b - a));
   const eo = x => 1 - Math.pow(1 - x, 3), back = x => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
   const lerp = (a, b, x) => a + (b - a) * x;
   const low = s => s.replace(/I/g, 'ı').replace(/İ/g, 'i').toLocaleLowerCase('tr');
-  window.K2 = { W, H, cl, seg, eo, back, lerp, low };
+  window.K2 = { LAND, W, H, cl, seg, eo, back, lerp, low };
   const R = ST.rng(21), STARS = [...Array(110)].map(() => ({ x: R() * W, y: R() * H, r: R() * 2.6 + 1, c: [P.zoom.mist, P.zoom.cream, P.zoom.sun][Math.floor(R() * 3)], d: 0.1 + R() * 0.3 }));
-  const POSE = { dos: { x: 540, y: 1090, s: 0.74 }, zoom: { x: 850, y: 1655, s: 0.42 }, iso: { x: 850, y: 1655, s: 0.42 } };
+  const POSE = LAND ? { dos: { x: 1480, y: 600, s: 0.62 }, zoom: { x: 1730, y: 790, s: 0.38 }, iso: { x: 1730, y: 790, s: 0.38 } } : { dos: { x: 540, y: 1090, s: 0.74 }, zoom: { x: 850, y: 1655, s: 0.42 }, iso: { x: 850, y: 1655, s: 0.42 } };
   const WIPE = { dos: P.dos.ink, zoom: P.zoom.sun, iso: P.dos.pink };
   let C = null;
   function init() {
@@ -28,15 +28,15 @@
     if (mode === 'zoom') { let s = `<rect width="${W}" height="${H}" fill="${P.zoom.night}"/>`;
       for (const p of STARS) s += `<circle cx="${p.x}" cy="${(p.y + t * 12 * p.d * 10) % H}" r="${p.r}" fill="${p.c}"/>`; return s; }
     if (mode === 'iso') { let s = `<rect width="${W}" height="${H}" fill="${P.iso.ground}"/>`; let d = '';
-      for (let i = 0; i < 38; i++) for (let j = 0; j < 66; j++) if ((i + j) % 2 === 0) d += `M${i * 30} ${j * 30}h2.4v2.4h-2.4Z`;
+      for (let i = 0; i < W / 30 + 1; i++) for (let j = 0; j < H / 30 + 1; j++) if ((i + j) % 2 === 0) d += `M${i * 30} ${j * 30}h2.4v2.4h-2.4Z`;
       return s + `<path d="${d}" fill="#d9cfbd"/>`; }
     return ST.paper(W, H) + ST.halftone(0, 0, W, H, 24, 45, ST.fields.edge(W, H, 150), EP.edgeInk || P.dos.pink, 0.62, 'style="mix-blend-mode:multiply" opacity="0.5"');
   }
   function hud(mode, si, t) {
     const dark = mode === 'zoom', fg = dark ? P.zoom.cream : P.dos.ink, bgc = dark ? P.zoom.r2 : P.dos.ink;
     let s = ST.chip(44, 104, `DOSYA #${EP.caseNo}`, bgc, dark ? P.zoom.cream : P.dos.paper, 34);
-    if (si > 0 && si < C.last) s += ST.chip(44, 166, `KANIT ${Math.min(si, EP.exhibits || C.last - 1)}/${EP.exhibits || C.last - 1}`, dark ? P.zoom.sun : P.dos.cobalt, dark ? P.zoom.night : P.dos.paper, 30);
-    s += `<circle cx="872" cy="92" r="13" fill="${P.dos.red}" opacity="${Math.floor(t * 2) % 2 ? 1 : 0.25}"/><text x="896" y="104" font-family="'JetBrains Mono'" font-weight="800" font-size="32" fill="${fg}">KAYIT</text>`;
+    if (si > 0 && si < C.last && (!EP.exNum || EP.exNum(si))) s += ST.chip(44, 166, `KANIT ${EP.exNum ? EP.exNum(si) : Math.min(si, EP.exhibits || C.last - 1)}/${EP.exhibits || C.last - 1}`, dark ? P.zoom.sun : P.dos.cobalt, dark ? P.zoom.night : P.dos.paper, 30);
+    s += `<circle cx="${W - 208}" cy="92" r="13" fill="${P.dos.red}" opacity="${Math.floor(t * 2) % 2 ? 1 : 0.25}"/><text x="${W - 184}" y="104" font-family="'JetBrains Mono'" font-weight="800" font-size="32" fill="${fg}">KAYIT</text>`;
     return s;
   }
   function headline(lines, p, mode) { // dosya başlığı: harf harf düşer
@@ -49,8 +49,8 @@
     return s;
   }
   function bigNum(txt, p) {
-    return `<clipPath id="bn"><text x="1110" y="${1000}" text-anchor="end" font-family="'Alfa Slab One'" font-size="620">${txt}</text></clipPath>
-      <g clip-path="url(#bn)" style="mix-blend-mode:multiply" opacity="${0.45 * p}">${ST.halftone(260, 480, 860, 560, 20, 30, () => 0.62, P.dos.cobalt, 0.7)}</g>`;
+    return `<clipPath id="bn"><text x="${W + 30}" y="${LAND ? 760 : 1000}" text-anchor="end" font-family="'Alfa Slab One'" font-size="620">${txt}</text></clipPath>
+      <g clip-path="url(#bn)" style="mix-blend-mode:multiply" opacity="${0.45 * p}">${ST.halftone(W - 820, LAND ? 240 : 480, 860, 560, 20, 30, () => 0.62, P.dos.cobalt, 0.7)}</g>`;
   }
   function render(t) {
     if (!C) init();
@@ -64,7 +64,7 @@
     const sx = Math.sin(t * 93) * shake, sy = Math.cos(t * 71) * shake;
     let s = `<defs>${ST.defs(t)}</defs>` + bg(mode, t);
     if (mode === 'dos') {
-      s += `<g style="mix-blend-mode:multiply">${ST.halftone(0, 500, W, 1300, 22, 15, ST.fields.radial(540, 1020, 120, 560), EP.haloInk || P.dos.yellow, 0.72)}</g>`;
+      s += `<g style="mix-blend-mode:multiply">${(LAND ? ST.halftone(900, 0, 1020, H, 22, 15, ST.fields.radial(1480, 580, 100, 520), EP.haloInk || P.dos.yellow, 0.72) : ST.halftone(0, 500, W, 1300, 22, 15, ST.fields.radial(540, 1020, 120, 560), EP.haloInk || P.dos.yellow, 0.72))}</g>`;
       if (EP.bigNum && EP.bigNum[si]) s += bigNum(EP.bigNum[si], eo(seg(into, 0, 0.5)));
       if (EP.heads && EP.heads[si]) s += headline(EP.heads[si], seg(into, 0.05, 0.9), mode);
       if (EP.subs && EP.subs[si]) s += `<text x="64" y="${340 + EP.heads[si].length * 150 - 60}" font-family="'JetBrains Mono'" font-weight="800" font-size="34" fill="${P.dos.ink}" opacity="${seg(into, 0.6, 0.9)}">${EP.subs[si]}</text>`;
@@ -91,15 +91,15 @@
     if (mode === 'dos') s += ST.grain(W, H, t, P.dos.paper, P.dos.ink, 200);
     // çıkış
     if (si === last) { const lp = back(seg(t, L[last].end + 0.05, L[last].end + 0.5));
-      if (lp > 0) s += `<g transform="translate(540 300) scale(${lp})">${ST.headline(0, 0, 130, 'BİLGE KEDİ', P.dos.ink, P.dos.cobalt, 'middle')}
+      if (lp > 0) s += `<g transform="translate(${LAND ? 640 : 540} ${LAND ? 420 : 300}) scale(${lp})">${ST.headline(0, 0, 130, 'BİLGE KEDİ', P.dos.ink, P.dos.cobalt, 'middle')}
         <text x="0" y="90" text-anchor="middle" font-family="'JetBrains Mono'" font-weight="800" font-size="40" fill="${P.dos.ink}">YARIN YENİ BİR DOSYA!</text></g>`; }
     // nokta silme geçişi (sahne değişiminde ekranı kaplar)
-    for (let i = 1; i <= last; i++) { const b = C.sceneStart(i), p = (t - (b - 0.24)) / 0.24; if (p > 0 && p < 2) s += ST.dotWipe(W, H, p, WIPE[EP.modes[i] || 'dos']); }
+    for (let i = 1; i <= last; i++) { if (EP.noWipe && EP.noWipe(i)) continue; const b = C.sceneStart(i), p = (t - (b - 0.24)) / 0.24; if (p > 0 && p < 2) s += ST.dotWipe(W, H, p, WIPE[EP.modes[i] || 'dos']); }
     if (flash > 0) s += `<rect width="${W}" height="${H}" fill="#fff" opacity="${flash}"/>`;
     document.getElementById('s').innerHTML = s;
     // altyazı şeridi
     const cap = document.getElementById('cap'), ch = C.CH.find(k => t >= k.s && t < k.e);
-    cap.style.top = (mode === 'dos' ? 1500 : 1290) + 'px';
+    cap.style.top = (LAND ? (EP.capY || 905) : mode === 'dos' ? 1500 : 1290) + 'px';
     if (ch && !(si === last && t > L[last].end)) {
       const vis = ch.words.filter(w => t >= w.s - 0.06);
       cap.innerHTML = vis.map((w, i) => { const a = seg(t, w.s - 0.06, w.s + 0.1), sc = a < 1 ? lerp(0.5, 1.1, back(a)) : 1, on = i === vis.length - 1 && t < w.e + 0.3;

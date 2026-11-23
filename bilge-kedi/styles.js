@@ -128,7 +128,7 @@
     const sp = chars.map((ch, i) => { const q = cl(p * (n * 0.25 + 1) - i * 0.25); const dy = (1 - Math.min(1, q)) * -90;
       return `<tspan dy="0" opacity="${q > 0 ? 1 : 0}">${ch}</tspan>`; }).join('');
     const base = `x="${x}" y="${y}" font-family="${F.head}" font-size="${size}" text-anchor="${anchor}"`;
-    return `<text ${base} transform="translate(9 9)" fill="${shadow}" style="mix-blend-mode:multiply">${sp}</text><text ${base} fill="${col}">${sp}</text>`;
+    const off = Math.max(4, Math.min(9, size * 0.06)); return `<text ${base} transform="translate(${off} ${off})" fill="${shadow}" style="mix-blend-mode:multiply">${sp}</text><text ${base} fill="${col}">${sp}</text>`;
   }
   function stamp(x, y, txt, col = PAL.dos.red, rot = -10, sc = 1, size = 110) {
     const w = txt.length * size * 0.66 + 80, h = size * 1.45;

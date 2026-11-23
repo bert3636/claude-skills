@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="node_modules/@fontsource/alfa-slab-one/400.css"><link rel="stylesheet" href="node_modules/@fontsource/jetbrains-mono/800.css">
+<style>html,body{margin:0;width:1920px;height:1080px;background:transparent;overflow:hidden}svg{position:absolute;inset:0}</style>
+<script src="cat.js"></script><script src="styles.js"></script><script src="cat_ht.js"></script></head><body><svg id="s" width="1920" height="1080"></svg>
+<script>
+const q = new URLSearchParams(location.search), n = q.get('n'), t1 = q.get('t1'), t2 = q.get('t2'), ic = q.get('ic'), col = q.get('col'), D = ST.PAL.dos;
+const side = (x) => `<g><clipPath id="c${x}"><rect x="${x}" y="0" width="656" height="1080"/></clipPath><g clip-path="url(#c${x})">${ST.paper(1920, 1080)}
+  ${ST.halftone(x, 0, 656, 1080, 22, 45, (px, py) => 1 - Math.min(1, Math.min(px - x, x + 656 - px, py, 1080 - py) / 140), D.pink, 0.62, 'style="mix-blend-mode:multiply" opacity="0.5"')}</g></g>`;
+let s = `<defs>${ST.defs(0)}</defs>` + side(0) + side(1264);
+s += `<rect x="650" width="14" height="1080" fill="${D.ink}"/><rect x="1258" width="14" height="1080" fill="${D.ink}"/>`;
+s += ST.chip(60, 110, 'DOSYA #' + n, D.ink, D.paper, 40);
+s += ST.headline(60, 330, 92, t1, D.ink, D.cobalt) + ST.headline(60, 440, 92, t2, D.ink, D.cobalt);
+s += `<text x="328" y="740" text-anchor="middle" font-size="220">${ic}</text>`;
+s += `<rect x="60" y="860" width="536" height="90" rx="45" fill="${col}"/><text x="328" y="920" text-anchor="middle" font-family="'JetBrains Mono'" font-weight="800" font-size="40" fill="#fff3dc">KANIT İNCELENİYOR</text>`;
+s += `<g style="mix-blend-mode:multiply">${ST.halftone(1264, 200, 656, 760, 22, 15, ST.fields.radial(1592, 600, 80, 360), D.yellow, 0.72)}</g>`;
+s += ST.cat({ glint: 0.8, brow: 0.6, lookX: -0.7 }, { x: 1592, y: 640, s: 0.62 }, 'ink');
+s += `<circle cx="1330" cy="98" r="13" fill="${D.red}"/><text x="1354" y="110" font-family="'JetBrains Mono'" font-weight="800" font-size="34" fill="${D.ink}">KAYIT</text>`;
+s += `<text x="1592" y="1000" text-anchor="middle" font-family="'Alfa Slab One'" font-size="54" fill="${D.ink}">BİLGE KEDİ</text>`;
+document.getElementById('s').innerHTML = s;
+</script></body></html>
