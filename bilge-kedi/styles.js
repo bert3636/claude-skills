@@ -65,8 +65,10 @@
     return `<filter id="stOutline" x="-10%" y="-10%" width="120%" height="120%">
         <feMorphology in="SourceAlpha" operator="dilate" radius="8" result="d"/><feFlood flood-color="${PAL.dos.ink}"/><feComposite in2="d" operator="in" result="o"/>
         <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="stRim" x="-10%" y="-10%" width="120%" height="120%"><feMorphology in="SourceAlpha" operator="dilate" radius="9" result="d"/><feFlood flood-color="${PAL.dos.paper}"/><feComposite in2="d" operator="in" result="o"/>
+        <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       <filter id="stBoil" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="${seed}"/>
-        <feDisplacementMap in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
+        <feDisplacementMap in="SourceGraphic" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
       <filter id="stWhite"><feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/></filter>
       <filter id="stLines" x="-10%" y="-10%" width="120%" height="120%">
         <feColorMatrix type="luminanceToAlpha" in="SourceGraphic" result="l"/>
@@ -106,6 +108,10 @@
     const body = `${drawCat(st)}${over}`;
     if (variant === 'line') return `<g transform="${tf}" filter="url(#stLines)">${body}</g>`;
     if (variant === 'scratch') return `<g transform="${tf}" filter="url(#stScratch)">${body}</g>`;
+    if (window.drawCatHT && variant !== 'old') { // halftone dosya karakteri; koyu zeminde krem kenar
+      const rim = variant === 'inkDark' || variant === 'flat' && false;
+      return `<g transform="${tf}"><g ${variant === 'inkDark' ? 'filter="url(#stRim)"' : ''}><g filter="url(#stBoil)">${drawCatHT(st)}${over}</g></g></g>`;
+    }
     const id = 'catm' + (catN++);
     let shade = '';
     if (variant === 'ink') { // gövdenin sağ altına halftone gölge, kedi siluetine maskeli

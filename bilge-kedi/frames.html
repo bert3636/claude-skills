@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="node_modules/@fontsource/jost/600.css"><link rel="stylesheet" href="node_modules/@fontsource/jost/700.css"><link rel="stylesheet" href="node_modules/@fontsource/jost/800.css">
 <link rel="stylesheet" href="node_modules/@fontsource/patrick-hand/400.css">
 <style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}svg{position:absolute;inset:0}</style>
-<script src="cat.js"></script><script src="styles.js"></script></head><body><svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+<script src="cat.js"></script><script src="styles.js"></script><script src="cat_ht.js"></script></head><body><svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
 <script>
 const f = +new URLSearchParams(location.search).get('f'), t = 1.3, W = 1080, H = 1920, P = ST.PAL;
 // basit balina silueti (yan görünüş), ölçek s
@@ -37,7 +37,7 @@ if (f === 2) { // ÖLÇEK YAKINLAŞTIRMA
   // minik kril + sonraki durak halkası
   s += `<ellipse cx="705" cy="960" rx="9" ry="4" fill="${z.coral}"/>` + ST.nextStop(705, 960, 34, 'SONRAKİ DURAK', 'Kril: 1 cm', 760, 1150, t);
   s += `<text x="70" y="250" font-family="'Jost'" font-weight="700" font-size="104" fill="${z.cream}">Ne kadar</text><text x="70" y="370" font-family="'Jost'" font-weight="700" font-size="104" fill="${z.sun}">büyük?</text>`;
-  s += ST.cat({ lookX: 0.8, lookY: -0.4, brow: 0.6, glint: 0.6 }, { x: 270, y: 1440, s: 0.6 }, 'flat');
+  s += ST.cat({ lookX: 0.8, lookY: -0.4, brow: 0.6, glint: 0.6 }, { x: 270, y: 1440, s: 0.6 }, 'inkDark');
   s += ST.sightLine(330, 1310, 690, 990, t);
   s += ST.scaleRibbon(600, 1520, 400, 0.66, ['1 cm', '1 m', '30 m'], '30 m');
   s += `<rect x="60" y="1690" width="6" height="96" fill="${z.sun}"/><text x="88" y="1740" font-family="'Jost'" font-weight="600" font-size="42" fill="${z.cream}">Minicik krillerle beslenir…</text>
@@ -84,7 +84,7 @@ if (f === 4) { // İZOMETRİK
   s += `<text x="70" y="1520" font-family="'Jost'" font-weight="600" font-size="34" letter-spacing="4" fill="${P.iso.ink}">BİR BALİNA ≈ 30 FİL</text>`;
   for (let i = 0; i < 30; i++) { const x = 90 + (i % 10) * 90, y = 1590 + Math.floor(i / 10) * 80;
     s += `<g transform="translate(${x} ${y})"><rect x="-26" y="-18" width="52" height="34" rx="14" fill="#8d8a9a"/><rect x="-26" y="12" width="10" height="16" fill="#8d8a9a"/><rect x="14" y="12" width="10" height="16" fill="#8d8a9a"/><path d="M 24 -6 q 18 6 10 30" stroke="#8d8a9a" stroke-width="8" fill="none" stroke-linecap="round"/></g>`; }
-  s += ST.cat({ lookX: -0.6, lookY: 0.4, brow: 0.5 }, { x: 880, y: 1330, s: 0.42 }, 'flat');
+  s += ST.cat({ lookX: -0.6, lookY: 0.4, brow: 0.5 }, { x: 880, y: 1330, s: 0.42 }, 'ink');
 }
 if (f === 5) { // SCRATCH FİLM
   s += ST.paper(W, H, 'scr');
@@ -103,6 +103,14 @@ if (f === 5) { // SCRATCH FİLM
   s += `</g>`;
   s += ST.cat({ lookX: 0.6, lookY: -0.5, brow: 0.7 }, { x: 800, y: 1660, s: 0.5 }, 'scratch');
   s += `<text x="70" y="1700" font-family="'Jost'" font-weight="600" font-size="44" fill="${P.scr.cream}">Şarkısı kilometrelerce uzağa gider.</text>`;
+}
+if (f === 6) { // İFADE SAYFASI
+  s += ST.paper(W, H) + ST.halftone(0, 0, W, H, 24, 45, ST.fields.edge(W, H, 150), P.dos.yellow, 0.62, 'style="mix-blend-mode:multiply" opacity="0.6"');
+  s += ST.headline(60, 170, 110, 'BİLGE KEDİ', P.dos.ink) + `<text x="64" y="240" font-family="'JetBrains Mono'" font-weight="800" font-size="34" fill="${P.dos.ink}">KARAKTER DOSYASI · İFADELER</text>`;
+  const ex = [['normal', {}], ['konuşuyor', { mouth: 0.8 }], ['göz kırpıyor', { blink: 1 }], ['mutlu', { happy: 1, mouth: 0.4 }], ['şaşkın', { brow: 1, ear: 1, mouth: 0.5, glint: 1 }], ['düşünüyor', { lookX: -0.8, lookY: -0.8, brow: 0.6, tail: 0.8 }]];
+  ex.forEach(([n, st], i) => { const x = 280 + (i % 2) * 520, y = 560 + Math.floor(i / 2) * 500;
+    s += ST.cat(st, { x, y, s: 0.46 }, 'ink') + `<text x="${x}" y="${y + 240}" text-anchor="middle" font-family="'JetBrains Mono'" font-weight="800" font-size="34" fill="${P.dos.ink}">${n.toLocaleUpperCase('tr')}</text>`; });
+  s += ST.grain(W, H, t, P.dos.paper, P.dos.ink);
 }
 document.getElementById('s').innerHTML = s;
 </script></body></html>
