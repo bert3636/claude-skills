@@ -10,6 +10,7 @@ Claude skill'lerimin tek listesi. `skills.txt`'te ne varsa bilgisayarımda ve b�
 ```
 
 Yol `*` ile biterse altındaki her klasör ayrı skill olarak kurulur.
+Yol `agents/<ad>.md` ise dosya alt ajan olarak `~/.claude/agents` içine kurulur.
 
 ## Bilgisayara kurmak / güncellemek
 ```bash

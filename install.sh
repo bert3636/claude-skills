@@ -4,6 +4,7 @@
 set +e
 LIST_URL="${SKILLS_LIST_URL:-https://raw.githubusercontent.com/bert3636/claude-skills/main/skills.txt}"
 S="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"; T=$(mktemp -d); mkdir -p "$S"
+A="${CLAUDE_AGENTS_DIR:-$HOME/.claude/agents}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]:-.}")" 2>/dev/null && pwd)"
 if [ -f "$HERE/skills.txt" ]; then LIST=$(cat "$HERE/skills.txt"); else LIST=$(curl -fsSL "$LIST_URL"); fi
 
@@ -23,7 +24,11 @@ echo "$LIST" | grep -v '^\s*#' | grep -v '^\s*$' | while read -r repo path name;
   # Git Bash "/yol" desenini Windows yoluna cevirmesin diye
   else (cd "$dir" && MSYS_NO_PATHCONV=1 git sparse-checkout set --no-cone "/$base") >/dev/null 2>&1; fi
   echo "$repo"
-  if [ "$path" != "$base" ]; then
+  if [[ "$base" == agents/*.md || "$base" == */agents/*.md ]]; then
+    # alt ajan dosyası: ~/.claude/agents içine
+    mkdir -p "$A"; f="$dir/$base"
+    if [ -f "$f" ]; then cp "$f" "$A/$(basename "$f")" && echo "  + ajan $(basename "$f" .md)"; else echo "  ! $(basename "$f") bulunamadi"; fi
+  elif [ "$path" != "$base" ]; then
     for d in "$dir/$base"/*/; do [ -f "$d/SKILL.md" ] && put "${d%/}" "$(basename "$d")"; done
   else
     put "$dir/$base" "${name:-$(basename "$base")}"

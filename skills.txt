@@ -17,3 +17,9 @@ Graphify-Labs/graphify              graphify/skill.md     graphify
 lemomo-ai/lemo-opuscar              plugin/skills/lemo-opuscar
 bert3636/claude-skills              skills/awesome-design-md
 Leonxlnx/earshot                    skills/*
+affaan-m/ECC                        skills/remotion-video-creation
+affaan-m/ECC                        skills/windows-desktop-e2e
+affaan-m/ECC                        skills/short-video-distribution
+# Satır yolu agents/<ad>.md ise alt ajan olarak ~/.claude/agents içine kurulur.
+affaan-m/ECC                        agents/csharp-reviewer.md
+affaan-m/ECC                        agents/silent-failure-hunter.md
