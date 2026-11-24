@@ -38,6 +38,19 @@
         return s + SP.planet(w * 0.85, h * 0.2, 60, 'moon') + SP.rocket(w * 0.48, h * 0.42, 1.05, 1.1, 0.3); } },
     uzaybilmece: { no: 'B2', land: 1, h: ['UZAY', 'BİLMECESİ'], sub: '8 SORU · KAÇINI BİLECEKSİN?', stamp: '8 SORU', cat: { glint: 1, brow: 1, mouth: 0.3, lookX: 0.6, lookY: -0.5 },
       art: (w, h) => SP.stars(w, h, 80, 17) + SP.planet(w * 0.2, h * 0.75, 110, 'earth') + SP.planet(w * 0.36, h * 0.3, 60, 'moon') + SP.planet(w * 0.82, h * 0.78, 90, 'mars') + SP.iss(w * 0.8, h * 0.25, 0.7, 12) + big(w * 0.55, h * 0.72, 380, '?') },
+    gunessistemi: { no: '10', land: 1, h: ['GÜNEŞ', 'SİSTEMİ'], sub: 'GEZEGEN GEZEGEN BÜYÜK TUR!', stamp: '8 GEZEGEN', cat: { glint: 1, brow: 0.8, mouth: 0.8, lookX: 0.7, lookY: -0.3 },
+      art: (w, h) => { let s = SP.stars(w, h, 80, 10) + `<ellipse cx="${w * 0.1}" cy="${h * 0.55}" rx="${w * 1.0}" ry="${h * 0.32}" fill="none" stroke="${z.mist}" stroke-width="3" stroke-dasharray="6 14"/>` + SP.sunGlow(-20, h * 0.5, 190) + SP.planet(-20, h * 0.5, 190, 'sun');
+        [[0.36, 0.42, 30, 'mars'], [0.5, 0.6, 48, 'earth'], [0.66, 0.38, 95, 'jupiter'], [0.88, 0.62, 62, 'neptune']].forEach(([x, y, r, k]) => s += SP.planet(x * w, y * h, r, k));
+        return s + SP.planet(w * 0.56, h * 0.47, 14, 'moon'); } },
+    bilmece: { no: 'B1', tag: 'BİLMECE', land: 1, h: ['DEDEKTİF', 'BİLMECESİ'], sub: '8 SORU · KAÇINI BİLECEKSİN?', stamp: '8 SORU', cat: { glint: 1, brow: 1, mouth: 0.3, lookX: 0.6, lookY: -0.5 },
+      art: (w, h) => { let s = `<rect width="${w}" height="${h}" fill="#2f5fd0"/>`; [['🐋', 0.2, 0.3, 150], ['🐜', 0.2, 0.75, 120], ['🌿', 0.82, 0.3, 130], ['🌈', 0.84, 0.75, 120]].forEach(([e, x, y, f]) => s += `<circle cx="${x * w}" cy="${y * h}" r="${f * 0.75}" fill="#fff8e8"/><text x="${x * w}" y="${y * h + f * 0.35}" text-anchor="middle" font-size="${f}">${e}</text>`);
+        return s + big(w * 0.5, h * 0.72, 400, '?'); } },
+    dosyalar: { no: '07-09', tag: 'DOĞA', land: 1, h: ['3 GİZLİ', 'DOSYA!'], sub: 'BALİNA · KARINCA · AĞAÇ', stamp: 'GİZLİ!', cat: { glint: 1, brow: 0.8, mouth: 0.7, lookX: 0.6 },
+      art: (w, h) => { let s = `<rect width="${w}" height="${h}" fill="${D.paper}"/>` + ST.halftone(0, 0, w, h, 20, 30, () => 0.35, D.cobalt, 0.6, 'opacity="0.35"');
+        [['🐋', '#07', D.cobalt, -6], ['🐜', '#08', D.red, 3], ['🌳', '#09', D.teal, -2]].forEach(([e, n, c, r], i) => { const x = w * (0.19 + i * 0.31), y = h * 0.52;
+          s += `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-125" y="-170" width="250" height="330" rx="14" fill="${D.ink}" transform="translate(10 10)"/><rect x="-125" y="-170" width="250" height="330" rx="14" fill="${c}" stroke="${D.ink}" stroke-width="7"/><rect x="-125" y="-205" width="110" height="45" rx="10" fill="${c}" stroke="${D.ink}" stroke-width="7"/>
+            <text x="0" y="40" text-anchor="middle" font-size="150">${e}</text><text x="0" y="135" text-anchor="middle" font-family="'Alfa Slab One'" font-size="52" fill="#fff8e8">${n}</text></g>`; });
+        return s; } },
   };
 
   window.draw = function (k) {
@@ -50,7 +63,7 @@
     s += ST.halftone(0, 0, W, H, 24, 45, ST.fields.edge(W, H, 170), D.pink, 0.62, 'style="mix-blend-mode:multiply" opacity="0.5"');
     s += `<g style="mix-blend-mode:multiply">` + ST.halftone(0, 0, W, H, 22, 15, ST.fields.radial(L.cat.x, L.cat.y, 120, 520), D.yellow, 0.72) + `</g>`;
     if (!land) s += `<clipPath id="num"><text x="${L.num[0]}" y="${L.num[1]}" text-anchor="end" font-family="'Alfa Slab One'" font-size="${L.num[2]}">${e.no}</text></clipPath><g clip-path="url(#num)" style="mix-blend-mode:multiply" opacity="0.35">${ST.halftone(0, 0, W, H, 20, 30, () => 0.62, D.cobalt, 0.7)}</g>`;
-    s += ST.chip(land ? 70 : 50, land ? 110 : 120, `DOSYA #${e.no}`) + ST.chip(land ? 400 : 380, land ? 110 : 120, 'UZAY', D.cobalt);
+    s += ST.chip(land ? 70 : 50, land ? 110 : 120, `DOSYA #${e.no}`) + ST.chip(land ? 70 + (e.no.length + 7) * 21 + 60 : 380, land ? 110 : 120, e.tag || 'UZAY', D.cobalt);
     e.h.forEach((t, i) => s += ST.headline(L.hx, L.hy[i], Math.min(L.hs, L.hw / ([...t].length * 0.82)), t, i ? D.red : D.ink));
     s += `<text x="${L.hx + 6}" y="${L.sub}" font-family="'JetBrains Mono'" font-weight="800" font-size="${land ? 44 : 40}" fill="${D.ink}">${e.sub}</text>`;
     // kanıt fotoğrafı
